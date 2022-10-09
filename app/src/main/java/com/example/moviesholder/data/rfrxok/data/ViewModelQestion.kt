@@ -3,7 +3,11 @@ package com.example.moviesholder.data.rfrxok.data
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.moviesholder.data.Repo
+import com.example.moviesholder.data.film_object.movie.FilmListModel
+import com.example.moviesholder.data.film_object.movie.film_model.FilmModel
 import com.example.moviesholder.data.rfrxok.data.remote.FilmApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -12,6 +16,12 @@ import io.reactivex.schedulers.Schedulers
 class ViewModelQestion(application : Application) : AndroidViewModel(application) {
 
     private val compositeDisposable = CompositeDisposable()
+
+    val filmList = ArrayList<FilmListModel>()
+
+    private val _selected = MutableLiveData<FilmListModel>()
+    val selected: LiveData<FilmListModel>
+        get() = _selected
 
     override fun onCleared() {
         compositeDisposable.dispose()
@@ -24,9 +34,8 @@ class ViewModelQestion(application : Application) : AndroidViewModel(application
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    for (i in it.docs){
-                        Repo.listTest.add(i)
-                    }
+                    //filmList.add(it)
+                    _selected.postValue(it)
                 }, {
 
                 })
