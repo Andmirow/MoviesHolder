@@ -36,6 +36,7 @@ class ViewModelQestion(application : Application) : AndroidViewModel(application
                 .subscribe({
                     //filmList.add(it)
                     _selected.postValue(it)
+                    Log.d("retro",it.toString())
                 }, {
 
                 })
