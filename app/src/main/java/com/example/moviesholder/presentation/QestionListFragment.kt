@@ -26,7 +26,7 @@ class QestionListFragment : Fragment(R.layout.fragment_sender) {
 
 
 
-        val qestlistViewModel =  ViewModelProvider(this).get(ViewModelQestion::class.java)
+        val qestlistViewModel =  ViewModelProvider(this).get(MainViewModel::class.java)
         Log.i("MyResult", "create qestlistViewModel")
 
         qestlistViewModel.fetchList((activity?.application as FilmApp).filmApi)

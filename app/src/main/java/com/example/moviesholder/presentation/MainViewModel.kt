@@ -13,10 +13,9 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
-class ViewModelQestion(application : Application) : AndroidViewModel(application) {
+class MainViewModel(application : Application) : AndroidViewModel(application) {
 
     private val compositeDisposable = CompositeDisposable()
-    private val scope = CoroutineScope(Dispatchers.IO)
 
 
     private val _selected = MutableLiveData<FilmListModel>()
@@ -32,7 +31,7 @@ class ViewModelQestion(application : Application) : AndroidViewModel(application
     fun fetchList(filmApi: FilmApi?){
         Log.i("MyResult","fetchList")
         filmApi?.let { filmApi ->
-            val disposable =filmApi.getFilmList("54PEKD1-QV741T0-NHKSR4H-2JXE7A4","1-10","rating.kp","rating.kp","-1","1","25")
+            val disposable =filmApi.getFilmList("54PEKD1-QV741T0-NHKSR4H-2JXE7A4","1-10","rating.kp","rating.kp","-1","1","5")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -41,23 +40,8 @@ class ViewModelQestion(application : Application) : AndroidViewModel(application
                     Log.i("MyResult","good")
                 },{
 
-                    Log.i("MyResult","пездарики")
+                    Log.i("MyResult",it.toString())
                 })
-//            val test =  compositeDisposable.add(filmApi.getFilmList("54PEKD1-QV741T0-NHKSR4H-2JXE7A4","1-10","rating.kp","rating.kp","-1")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    _selected.postValue(it)
-//                    Log.i("MyResult",it.toString())
-//                }, {
-//                    Log.i("MyResult","пездарики")
-//                }))
-
-
-//            scope.launch {
-//                val res = filmApi.getFilmList("54PEKD1-QV741T0-NHKSR4H-2JXE7A4","1-10","rating.kp","rating.kp","-1")
-//                _selected.value=res.blockingGet()
-//            }
         }
 
     }

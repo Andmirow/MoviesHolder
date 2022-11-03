@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/film_card">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:clickable="true"
+        android:src="@drawable/ic_launcher_background"/>
+
+
+
+</androidx.cardview.widget.CardView>
+</layout>
