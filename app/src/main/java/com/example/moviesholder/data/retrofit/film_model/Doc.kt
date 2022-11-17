@@ -1,4 +1,4 @@
-package com.example.moviesholder.data.retrofit.film_object.movie
+package com.example.moviesholder.data.retrofit.film_model
 
 data class Doc(
     val alternativeName: String,
@@ -11,7 +11,7 @@ data class Doc(
     val movieLength: Int,
     val name: String,
     val names: List<Name>,
-    val poster: Poster,
+    val poster: Poster?,
     val rating: Rating,
     val releaseYears: List<ReleaseYear>,
     val shortDescription: String,

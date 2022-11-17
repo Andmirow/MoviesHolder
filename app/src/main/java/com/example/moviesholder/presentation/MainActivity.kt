@@ -1,10 +1,10 @@
 package com.example.moviesholder.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.moviesholder.R
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesholder.databinding.ActivityMainBinding
 import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
@@ -37,13 +37,26 @@ class MainActivity : AppCompatActivity() {
 
     fun setRecyclerView(){
         val recycler = binding.rvFilmList
+        recycler.layoutManager = GridLayoutManager(this, 4)
         val adapter = FilmAdapter()
+
         recycler.adapter = adapter
+        val dividerItemDecorationVERTICAL = DividerItemDecoration(recycler.context, GridLayoutManager.VERTICAL)
+        val dividerItemDecorationHORIZONTAL = DividerItemDecoration(recycler.context, GridLayoutManager.HORIZONTAL)
+        recycler.addItemDecoration(dividerItemDecorationVERTICAL)
+        recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
+
+//        viewModel.selected.observe(this){
+//            adapter.reloadList(it.docs)
+//        }
 
         viewModel.selected.observe(this) {
             adapter.submitList(it.docs)
         }
     }
+
+
+
 
 
 }

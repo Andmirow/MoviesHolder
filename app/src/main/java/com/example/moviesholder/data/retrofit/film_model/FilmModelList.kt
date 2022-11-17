@@ -1,6 +1,6 @@
-package com.example.moviesholder.data.retrofit.film_object.movie
+package com.example.moviesholder.data.retrofit.film_model
 
-data class FilmListModel(
+data class FilmModelList(
     val docs: List<Doc>,
     val limit: Int,
     val page: Int,

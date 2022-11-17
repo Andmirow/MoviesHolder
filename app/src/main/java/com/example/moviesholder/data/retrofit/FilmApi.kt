@@ -1,7 +1,7 @@
 package com.example.moviesholder.data.retrofit
 
 
-import com.example.moviesholder.data.retrofit.film_object.movie.FilmListModel
+import com.example.moviesholder.data.retrofit.film_model.FilmModelList
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -17,7 +17,7 @@ interface FilmApi {
         @Query("sortType") sortType : String,
         @Query("page") page : String,
         @Query("limit") limit : String
-    ): Single<FilmListModel>
+    ): Single<FilmModelList>
 
 
 

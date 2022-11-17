@@ -40,7 +40,6 @@
             android:id="@+id/rv_film_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -48,6 +47,9 @@
             app:layout_constraintTop_toTopOf="@id/midle_line"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_film_card" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

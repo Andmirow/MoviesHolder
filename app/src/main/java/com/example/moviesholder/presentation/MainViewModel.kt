@@ -6,7 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moviesholder.data.retrofit.FilmApi
-import com.example.moviesholder.data.retrofit.film_object.movie.FilmListModel
+import com.example.moviesholder.data.retrofit.film_model.FilmModelList
+
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -18,8 +19,8 @@ class MainViewModel(application : Application) : AndroidViewModel(application) {
     private val compositeDisposable = CompositeDisposable()
 
 
-    private val _selected = MutableLiveData<FilmListModel>()
-    val selected: LiveData<FilmListModel>
+    private val _selected = MutableLiveData<FilmModelList>()
+    val selected: LiveData<FilmModelList>
         get() = _selected
 
 
@@ -31,7 +32,7 @@ class MainViewModel(application : Application) : AndroidViewModel(application) {
     fun fetchList(filmApi: FilmApi?){
         Log.i("MyResult","fetchList")
         filmApi?.let { filmApi ->
-            val disposable =filmApi.getFilmList("54PEKD1-QV741T0-NHKSR4H-2JXE7A4","1-10","rating.kp","rating.kp","-1","1","5")
+            val disposable =filmApi.getFilmList("54PEKD1-QV741T0-NHKSR4H-2JXE7A4","1-10","rating.kp","rating.kp","-1","1","30")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
