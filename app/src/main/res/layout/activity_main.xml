@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toTopOf="@+id/midle_line"
             app:layout_constraintEnd_toStartOf="@+id/filter_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <Button
             android:id="@+id/filter_button"
@@ -36,17 +37,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_film_list"
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rv_film_list"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@id/midle_line"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            tools:listitem="@layout/item_film_card" />-->
+
+        <androidx.fragment.app.FragmentContainerView
             android:layout_width="0dp"
+            android:id="@+id/fragment_container_view"
             android:layout_height="0dp"
+            tools:context=".presentation.AddItemActivity"
+            tools:layout="@layout/fragment_list_film"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/midle_line"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/item_film_card" />
+            app:layout_constraintTop_toTopOf="@id/midle_line"/>
 
 
 
