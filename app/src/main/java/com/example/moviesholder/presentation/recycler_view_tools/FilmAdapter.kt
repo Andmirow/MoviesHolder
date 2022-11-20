@@ -22,7 +22,6 @@ class FilmAdapter : ListAdapter<Doc, FilmViewHolder>(FilmListDiffItemCallBack())
         val film = getItem(position)
         Log.i("FilmInfo",film.toString())
         val binding = holder.binding
-
         when (binding){
             is ItemFilmCardBinding -> {
                     Glide.with(binding.photo.context)
@@ -32,7 +31,10 @@ class FilmAdapter : ListAdapter<Doc, FilmViewHolder>(FilmListDiffItemCallBack())
                 Log.i("FilmInfo2",binding.photo.context.toString())
             }
         }
+        binding.root.setOnClickListener {
 
+
+        }
     }
 
 }

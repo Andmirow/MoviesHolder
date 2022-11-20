@@ -1,7 +1,6 @@
-package com.example.moviesholder.domain
+package com.example.moviesholder.data.retrofit
 
 import android.app.Application
-import com.example.moviesholder.data.retrofit.FilmApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,12 +14,7 @@ class FilmApp :Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         configureRetrofit()
-
-
-        val test = ""
-
     }
 
 
@@ -38,7 +32,6 @@ class FilmApp :Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
-
 
         filmApi = retrofit.create(FilmApi::class.java)
 

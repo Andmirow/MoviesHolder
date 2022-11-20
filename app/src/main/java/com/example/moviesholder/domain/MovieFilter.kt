@@ -1,9 +1,8 @@
 package com.example.moviesholder.domain
 
-class Filter {
+object MovieFilter {
 
     var token = "54PEKD1-QV741T0-NHKSR4H-2JXE7A4"
-
         set(value) {
             field = value
             page = "1"
@@ -35,13 +34,17 @@ class Filter {
 
 
     var page = "1"
-
     var limit = "30"
 
-    fun naxtPage(){
 
+    fun naxtPage(){
+        val _page = page.toInt()
+        page = (_page+1).toString()
     }
 
-
+    fun earlyPage(){
+        val _page = page.toInt()
+        page = (_page-1).toString()
+    }
 
 }

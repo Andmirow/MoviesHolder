@@ -10,19 +10,16 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.moviesholder.R
 import com.example.moviesholder.databinding.FragmentListFilmBinding
-import com.example.moviesholder.domain.FilmApp
+import com.example.moviesholder.data.retrofit.FilmApp
 import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 
 
-private const val FILTER_PARAM = "param1"
+
 
 
 class ListFilmFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var viewModel: MainViewModel
     lateinit var binding : FragmentListFilmBinding
 
@@ -30,10 +27,10 @@ class ListFilmFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+
         viewModel.fetchList((activity?.application as FilmApp).filmApi)
-        arguments?.let {
-            param2 = it.getString(FILTER_PARAM)
-        }
+
     }
 
     override fun onAttach(context: Context) {
@@ -48,6 +45,9 @@ class ListFilmFragment : Fragment() {
     }
 
     companion object {
+        private const val FILTER_PARAM = "filter"
+
+
         @JvmStatic
         fun newInstance() =
             ListFilmFragment().apply {
@@ -71,12 +71,12 @@ class ListFilmFragment : Fragment() {
         val dividerItemDecorationHORIZONTAL = DividerItemDecoration(recycler.context, GridLayoutManager.HORIZONTAL)
         recycler.addItemDecoration(dividerItemDecorationVERTICAL)
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
-//        viewModel.selected.observe(this){
-//            adapter.reloadList(it.docs)
-//        }
+
         viewModel.selected.observe(viewLifecycleOwner) {
             adapter.submitList(it.docs)
         }
     }
+
+
 
 }
