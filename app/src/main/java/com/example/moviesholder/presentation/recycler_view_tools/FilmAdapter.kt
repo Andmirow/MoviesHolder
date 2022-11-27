@@ -7,34 +7,34 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.example.moviesholder.data.retrofit.film_model.Doc
 import com.example.moviesholder.databinding.ItemFilmCardBinding
+import com.example.moviesholder.domain.Film
+import com.example.moviesholder.domain.MapperFilm
 
 
-class FilmAdapter : ListAdapter<Doc, FilmViewHolder>(FilmListDiffItemCallBack()) {
+class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<Doc, FilmViewHolder>(FilmListDiffItemCallBack()) {
 
-
+    lateinit var binding : ItemFilmCardBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
-        val binding = ItemFilmCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        binding = ItemFilmCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return FilmViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        val film = getItem(position)
-        Log.i("FilmInfo",film.toString())
+        val doc = getItem(position)
+        val film = MapperFilm.mapDocToFilm(doc)
         val binding = holder.binding
         when (binding){
             is ItemFilmCardBinding -> {
                     Glide.with(binding.photo.context)
-                        .load(film.poster?.url)
+                        .load(film.poster)
                         .centerCrop()
                         .into(binding.photo)
-                Log.i("FilmInfo2",binding.photo.context.toString())
             }
         }
         binding.root.setOnClickListener {
-
-
+            Log.e("TAG", "НАЖАЛ")
+            onClickListener(film)
         }
     }
-
 }

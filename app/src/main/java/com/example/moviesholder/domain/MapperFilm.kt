@@ -7,6 +7,7 @@ class MapperFilm {
 
         fun mapDocToFilm(doc : Doc): Film{
             val poster = doc.poster
+
             val posterUrl = poster?.url
 
             val rating = doc.rating
