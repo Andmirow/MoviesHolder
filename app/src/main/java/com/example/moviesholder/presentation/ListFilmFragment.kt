@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,15 +20,14 @@ import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 
 class ListFilmFragment : Fragment() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by activityViewModels()
     lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentСontrol : FragmentСontrol
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.fetchList((activity?.application as FilmApp).filmApi)
-
     }
 
     override fun onAttach(context: Context) {
@@ -61,6 +61,34 @@ class ListFilmFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
     }
+
+
+
+
+
+
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.i("testus","onViewStateRestored")
+        viewModel.fetchList((activity?.application as FilmApp).filmApi)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("testus","onStart")
+
+    }
+    override fun onPause() {
+        super.onPause()
+        Log.i("testus","onResume")
+
+    }
+
+
+
+
+
 
 
     fun setRecyclerView(){

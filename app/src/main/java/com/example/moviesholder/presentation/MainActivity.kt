@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.moviesholder.R
 import com.example.moviesholder.databinding.ActivityMainBinding
+import com.example.moviesholder.domain.example1.Activity
 import kotlinx.android.synthetic.main.film_info.view.*
 
 
@@ -24,6 +25,10 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
             //Toast.makeText(this, "Пока не реализовал", Toast.LENGTH_LONG).show()
         }
 
+        val activity = Activity()
+        Toast.makeText(this,activity.keyboard.toString(),Toast.LENGTH_LONG).show()
+
+
     }
 
 
@@ -40,6 +45,7 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
     override fun openNewFragment(fragment : Fragment) {
         openFragment(fragment)
     }
+
 
     override fun closeFragment() {
         supportFragmentManager.popBackStack()

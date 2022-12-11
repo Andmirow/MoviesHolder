@@ -8,4 +8,6 @@ interface FragmentСontrol {
 
     fun openNewFragment(fragment : Fragment)
 
+
+
 }

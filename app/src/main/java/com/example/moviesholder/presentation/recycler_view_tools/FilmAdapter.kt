@@ -28,6 +28,7 @@ class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<D
             is ItemFilmCardBinding -> {
                     Glide.with(binding.photo.context)
                         .load(film.poster)
+
                         .centerCrop()
                         .into(binding.photo)
             }

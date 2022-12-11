@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.6"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelinevertical"
@@ -32,46 +32,68 @@
             app:layout_constraintStart_toStartOf="@+id/guidelinevertical"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelinevertical"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search:"
+                android:inputType="textCapWords"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <EditText
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/field"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelinevertical"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/search" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Field:"
+                android:inputType="textCapWords"/>
 
-        <EditText
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sortedField"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelinevertical"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/field">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SortedField:"
+                android:inputType="textCapWords"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sortedType"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelinevertical"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/sortedField">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SortedType:"
+                android:inputType="textCapWords"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/save"
@@ -83,9 +105,6 @@
             android:layout_marginBottom="10dp"
             app:layout_constraintStart_toStartOf="@+id/guidelinevertical" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </layout>
