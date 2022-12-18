@@ -1,8 +1,10 @@
 package com.example.moviesholder.domain.example1
 
+import dagger.Module
+import dagger.Provides
 
 
-//@Module
+@Module
 class ComputerModule {
 
 //    @Provides
@@ -10,10 +12,10 @@ class ComputerModule {
 //        return Monitor()
 //    }
 //
-//    @Provides
-//    fun provideKeyboard(): Keyboard {
-//        return Keyboard()
-//    }
+    @Provides
+    fun provideKeyboard(): Keyboard {
+        return Keyboard()
+    }
 //
 //    @Provides
 //    fun provideMouse(): Mouse {

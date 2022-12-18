@@ -5,17 +5,29 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.moviesholder.R
+import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.databinding.ActivityMainBinding
+import com.example.moviesholder.di.DaggerFilmComponent
 import com.example.moviesholder.domain.example1.Activity
 import kotlinx.android.synthetic.main.film_info.view.*
+import javax.inject.Inject
 
 
 class MainActivity() : AppCompatActivity(), FragmentСontrol {
 
     lateinit var binding : ActivityMainBinding
 
+//    @Inject
+//    lateinit var filmApi : FilmApi
+//
+//
+//    init {
+//        DaggerFilmComponent.create().inject(this)
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //filmApi = DaggerFilmComponent.create().inject(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         openFragment(ListFilmFragment.newInstance())

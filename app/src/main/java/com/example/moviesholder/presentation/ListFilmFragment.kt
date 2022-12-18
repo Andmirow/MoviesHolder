@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.moviesholder.data.retrofit.FilmApp
+import com.example.moviesholder.data.retrofit.FilmApi
+import com.example.moviesholder.di.FilmApp
 import com.example.moviesholder.databinding.FragmentListFilmBinding
+import com.example.moviesholder.di.DaggerFilmComponent
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
+import javax.inject.Inject
 
 
 class ListFilmFragment : Fragment() {
@@ -24,9 +26,18 @@ class ListFilmFragment : Fragment() {
     lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentСontrol : FragmentСontrol
 
+    @Inject
+    lateinit var filmApi : FilmApi
+
+//    init {
+//        DaggerFilmComponent.create().inject(this)
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerFilmComponent.create().inject(this)
         super.onCreate(savedInstanceState)
         //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         viewModel.fetchList((activity?.application as FilmApp).filmApi)
     }
 
@@ -56,6 +67,9 @@ class ListFilmFragment : Fragment() {
                 arguments = Bundle()
             }
     }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

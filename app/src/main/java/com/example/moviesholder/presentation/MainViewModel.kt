@@ -12,8 +12,13 @@ import com.example.moviesholder.domain.MovieFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class MainViewModel(application : Application) : AndroidViewModel(application){
+
+
+    //@Inject lateinit var retrofit : FilmApi
+
 
     private val compositeDisposable = CompositeDisposable()
 

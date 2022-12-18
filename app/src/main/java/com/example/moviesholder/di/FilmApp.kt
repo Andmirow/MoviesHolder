@@ -1,6 +1,7 @@
-package com.example.moviesholder.data.retrofit
+package com.example.moviesholder.di
 
 import android.app.Application
+import com.example.moviesholder.data.retrofit.FilmApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,6 +16,7 @@ class FilmApp :Application() {
     override fun onCreate() {
         super.onCreate()
         configureRetrofit()
+
     }
 
 
