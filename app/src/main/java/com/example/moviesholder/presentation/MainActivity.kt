@@ -5,12 +5,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.moviesholder.R
-import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.databinding.ActivityMainBinding
-import com.example.moviesholder.di.DaggerFilmComponent
 import com.example.moviesholder.domain.example1.Activity
-import kotlinx.android.synthetic.main.film_info.view.*
-import javax.inject.Inject
 
 
 class MainActivity() : AppCompatActivity(), FragmentСontrol {

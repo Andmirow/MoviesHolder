@@ -1,4 +1,6 @@
 package com.example.moviesholder.domain.example1
 
-class Memory {
+import javax.inject.Inject
+
+class Memory @Inject constructor(){
 }
