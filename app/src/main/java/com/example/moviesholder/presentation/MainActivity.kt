@@ -1,29 +1,22 @@
 package com.example.moviesholder.presentation
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.moviesholder.R
 import com.example.moviesholder.databinding.ActivityMainBinding
-import com.example.moviesholder.domain.example1.Activity
 
 
 class MainActivity() : AppCompatActivity(), FragmentСontrol {
 
     lateinit var binding : ActivityMainBinding
 
-//    @Inject
-//    lateinit var filmApi : FilmApi
-//
-//
-//    init {
-//        DaggerFilmComponent.create().inject(this)
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //filmApi = DaggerFilmComponent.create().inject(this)
+        supportFragmentManager.popBackStack()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         openFragment(ListFilmFragment.newInstance())
@@ -33,8 +26,8 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
             //Toast.makeText(this, "Пока не реализовал", Toast.LENGTH_LONG).show()
         }
 
-        val activity = Activity()
-        Toast.makeText(this,activity.keyboard.toString(),Toast.LENGTH_LONG).show()
+//        val activity = Activity()
+//        Toast.makeText(this,activity.keyboard.toString(),Toast.LENGTH_LONG).show()
 
 
     }
@@ -58,6 +51,5 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
     override fun closeFragment() {
         supportFragmentManager.popBackStack()
     }
-
 
 }
