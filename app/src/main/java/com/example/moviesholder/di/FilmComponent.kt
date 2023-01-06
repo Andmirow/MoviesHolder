@@ -1,12 +1,17 @@
 package com.example.moviesholder.di
 
+import com.example.moviesholder.data.room.ItemRepositoryImpl
 import com.example.moviesholder.domain.example1.ComputerModule
+import com.example.moviesholder.presentation.MainViewModel
 import dagger.Component
 
 
-@Component(modules = [RetrofitModule::class, ComputerModule::class ])
+@Component(modules = [RetrofitModule::class, RoomModule::class ])
 interface FilmComponent {
 
     fun inject(activity: FilmApp)
 
+    fun inject(itemRepositoryImpl: ItemRepositoryImpl)
+
+    fun inject(viewModel: MainViewModel)
 }

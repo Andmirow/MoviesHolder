@@ -7,18 +7,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.retrofit.film_model.FilmModelList
+import com.example.moviesholder.data.room.ItemRepositoryImpl
+import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.MovieFilter
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 class MainViewModel(application : Application) : AndroidViewModel(application){
 
 
-    //@Inject lateinit var retrofit : FilmApi
-
+    private val repository = ItemRepositoryImpl(application)
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -26,6 +25,14 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
     private val _selected = MutableLiveData<FilmModelList>()
     val selected: LiveData<FilmModelList>
         get() = _selected
+
+
+
+    fun saveFilm(film : Film){
+        repository.addFilm(film)
+
+    }
+
 
 
     override fun onCleared() {

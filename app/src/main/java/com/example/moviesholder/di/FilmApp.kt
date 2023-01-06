@@ -18,7 +18,7 @@ class FilmApp :Application() {
 
 
     override fun onCreate() {
-        DaggerFilmComponent.create().inject(this)
+        DaggerFilmComponent.builder().build().inject(this)
         super.onCreate()
         //configureRetrofit()
 

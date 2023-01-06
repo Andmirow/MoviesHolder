@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.example.moviesholder.R
 import com.example.moviesholder.data.retrofit.film_model.Doc
@@ -20,6 +21,7 @@ private const val ARG_FILM = "param1"
 
 class FilmInfoFragment : Fragment() {
 
+    private val viewModel: MainViewModel by activityViewModels()
     lateinit var film: Film
     lateinit var binding : FilmInfoBinding
     private var howToCloseFragment : FragmentСontrol? = null
@@ -59,7 +61,9 @@ class FilmInfoFragment : Fragment() {
 
 
         binding.save.setOnClickListener {
-            Toast.makeText(activity, "Пока не реализовал", Toast.LENGTH_LONG).show()
+            viewModel.saveFilm(film)
+
+            //Toast.makeText(activity, "Пока не реализовал", Toast.LENGTH_LONG).show()
             howToCloseFragment?.closeFragment()
         }
     }

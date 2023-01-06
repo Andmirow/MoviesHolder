@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class FilmDbModel(
     @PrimaryKey(autoGenerate = true)
     val id : Int,
+    val id_Retrofit : Int,
     val name : String,
     val poster : String,
     val rating : String,

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import javax.inject.Inject
 
 @Database(entities = [FilmDbModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -28,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     DB_NAME
                 )
-                   // .allowMainThreadQueries()
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = db
                 return db

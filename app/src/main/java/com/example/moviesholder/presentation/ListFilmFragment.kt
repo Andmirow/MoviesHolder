@@ -23,18 +23,9 @@ class ListFilmFragment : Fragment() {
     lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentСontrol : FragmentСontrol
 
-//    @Inject
-//    lateinit var filmApi : FilmApi
-
-//    init {
-//        DaggerFilmComponent.create().inject(this)
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //DaggerFilmComponent.create().inject(this)
         super.onCreate(savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         viewModel.fetchList((activity?.application as FilmApp).filmApi)
     }
 
@@ -65,9 +56,6 @@ class ListFilmFragment : Fragment() {
             }
     }
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
@@ -95,12 +83,6 @@ class ListFilmFragment : Fragment() {
         Log.i("testus","onResume")
 
     }
-
-
-
-
-
-
 
     fun setRecyclerView(){
         val recycler = binding.rvFilmList

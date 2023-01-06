@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.moviesholder.data.retrofit.film_model.Doc
 import com.example.moviesholder.databinding.ItemFilmCardBinding
 import com.example.moviesholder.domain.Film
-import com.example.moviesholder.domain.MapperFilm
+import com.example.moviesholder.data.MapperFilm
 
 
 class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<Doc, FilmViewHolder>(FilmListDiffItemCallBack()) {
