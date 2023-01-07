@@ -11,7 +11,7 @@ import com.example.moviesholder.domain.Film
 import com.example.moviesholder.data.MapperFilm
 
 
-class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<Film, FilmViewHolder>(FilmListDiffItemCallBack()) {
+class FilmAdapter(private val onClickListener : ((Film)-> Unit),private val onLongClickListener : ((Film)-> Unit)) : ListAdapter<Film, FilmViewHolder>(FilmListDiffItemCallBack()) {
 
     lateinit var binding : ItemFilmCardBinding
 
@@ -35,5 +35,11 @@ class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<F
             Log.e("TAG", "НАЖАЛ")
             onClickListener(film)
         }
+        binding.root.setOnLongClickListener {
+            Log.e("TAG", "сильно НАЖАЛ")
+            onLongClickListener(film)
+            return@setOnLongClickListener true
+        }
+
     }
 }

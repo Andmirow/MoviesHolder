@@ -24,17 +24,17 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
         setContentView(binding.root)
         openFragment(ListFilmFragment.newInstance())
 
-        binding.filterButton.setOnClickListener {
-            openFragment(FilterFragment())
-            //Toast.makeText(this, "Пока не реализовал", Toast.LENGTH_LONG).show()
-        }
-
-//        val activity = Activity()
-//        Toast.makeText(this,activity.keyboard.toString(),Toast.LENGTH_LONG).show()
-
-        binding.switchSave.setOnCheckedChangeListener{ buttonView, isChecked ->
-            MovieFilter.isPreserved = isChecked
-        }
+//        binding.filterButton.setOnClickListener {
+//            openFragment(FilterFragment())
+//            //Toast.makeText(this, "Пока не реализовал", Toast.LENGTH_LONG).show()
+//        }
+//
+////        val activity = Activity()
+////        Toast.makeText(this,activity.keyboard.toString(),Toast.LENGTH_LONG).show()
+//
+//        binding.switchSave.setOnCheckedChangeListener{ buttonView, isChecked ->
+//            MovieFilter.isPreserved = isChecked
+//        }
 
 
 
@@ -59,5 +59,8 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
     override fun closeFragment() {
         supportFragmentManager.popBackStack()
     }
+
+
+
 
 }

@@ -3,8 +3,11 @@ package com.example.moviesholder.data.room
 import android.app.Application
 import com.example.moviesholder.data.MapperFilm
 import com.example.moviesholder.data.room.database.AppDatabase
+import com.example.moviesholder.data.room.database.FilmDbModel
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmRepository
+import io.reactivex.Single
+import org.jetbrains.annotations.NotNull
 
 class ItemRepositoryImpl(application: Application) : FilmRepository {
 
@@ -20,13 +23,12 @@ class ItemRepositoryImpl(application: Application) : FilmRepository {
 //    }
 
 
-    override fun getListFilm(): List<Film> {
-        val listFilm = shopListDao.getListFilm()
-        return MapperFilm.mapListDbItemToEmtity(listFilm)
+    override fun getListFilm(): Single<List<FilmDbModel>> {
+        return shopListDao.getListFilm()
     }
 
-    override fun deleteFilm(film: Film) {
-        shopListDao.deleteFilm(film.idRoom)
+    override fun deleteFilm(film: Film) : Single<Int>  {
+        return shopListDao.deleteFilm(film.idRoom)
     }
 
     override fun findFilmByIdRoom(id: Int): Film {
@@ -42,23 +44,18 @@ class ItemRepositoryImpl(application: Application) : FilmRepository {
         return null
     }
 
-
-    override fun addFilm(film: Film) {
+    @NotNull
+    override fun addFilm(film: Film) : Single<Unit> {
         val filmChek = findFilmByIdRetrofit(film.idRetrofot)
-
-        if (filmChek != null) {
+         return if (filmChek != null) {
             shopListDao.addFilm(
                 MapperFilm.mapFilmToFilmDbModel(
                     filmChek.copy(idRoom = filmChek.idRoom)
                 )
             )
         }else{
-            shopListDao.addFilm(
-                MapperFilm.mapFilmToFilmDbModel(film)
-            )
+            shopListDao.addFilm(MapperFilm.mapFilmToFilmDbModel(film))
         }
-
-
 
     }
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesholder.databinding.FragmentListFilmBinding
 import com.example.moviesholder.di.FilmApp
 import com.example.moviesholder.domain.Film
+import com.example.moviesholder.domain.MovieFilter
 import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 
 
@@ -48,7 +49,6 @@ class ListFilmFragment : Fragment() {
     companion object {
         private const val FILTER_PARAM = "filter"
 
-
         @JvmStatic
         fun newInstance() =
             ListFilmFragment().apply {
@@ -59,11 +59,17 @@ class ListFilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+
+        binding.filterButton.setOnClickListener {
+            fragmentСontrol.openNewFragment(FilterFragment())
+        }
+
+        binding.switchSave.setOnCheckedChangeListener{ buttonView, isChecked ->
+            MovieFilter.isPreserved = isChecked
+            viewModel.fetchList((activity?.application as FilmApp).filmApi)
+        }
+
     }
-
-
-
-
 
 
 
@@ -73,43 +79,32 @@ class ListFilmFragment : Fragment() {
         viewModel.fetchList((activity?.application as FilmApp).filmApi)
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i("testus","onStart")
 
-    }
-    override fun onPause() {
-        super.onPause()
-        Log.i("testus","onResume")
-
-    }
 
     fun setRecyclerView(){
         val recycler = binding.rvFilmList
         recycler.layoutManager = GridLayoutManager(activity?.applicationContext, 4)
-        val adapter = FilmAdapter(this::openFilmCard)
+        val adapter = FilmAdapter(this::openFilmCard,this::deleteFilm)
         recycler.adapter = adapter
         val dividerItemDecorationVERTICAL = DividerItemDecoration(recycler.context, GridLayoutManager.VERTICAL)
         val dividerItemDecorationHORIZONTAL = DividerItemDecoration(recycler.context, GridLayoutManager.HORIZONTAL)
         recycler.addItemDecoration(dividerItemDecorationVERTICAL)
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
 
-
-
         viewModel.selected.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-
-
-
     }
 
 
     fun openFilmCard(film : Film){
-        Toast.makeText(binding.root.context, "click", Toast.LENGTH_LONG).show()
+        //Toast.makeText(binding.root.context, "click", Toast.LENGTH_LONG).show()
         fragmentСontrol.openNewFragment(FilmInfoFragment.newInstance(film))
     }
 
+    fun deleteFilm(film : Film){
+        viewModel.deleteFilm(film)
+    }
 
 
 }
