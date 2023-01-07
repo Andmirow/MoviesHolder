@@ -2,6 +2,9 @@ package com.example.moviesholder.domain
 
 object MovieFilter {
 
+    var isPreserved = false
+
+
     var token = "54PEKD1-QV741T0-NHKSR4H-2JXE7A4"
         set(value) {
             field = value
@@ -46,5 +49,8 @@ object MovieFilter {
         val _page = page.toInt()
         page = (_page-1).toString()
     }
+
+
+
 
 }

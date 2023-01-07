@@ -11,7 +11,7 @@ import com.example.moviesholder.domain.Film
 import com.example.moviesholder.data.MapperFilm
 
 
-class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<Doc, FilmViewHolder>(FilmListDiffItemCallBack()) {
+class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<Film, FilmViewHolder>(FilmListDiffItemCallBack()) {
 
     lateinit var binding : ItemFilmCardBinding
 
@@ -21,14 +21,12 @@ class FilmAdapter(private val onClickListener : ((Film)-> Unit)) : ListAdapter<D
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        val doc = getItem(position)
-        val film = MapperFilm.mapDocToFilm(doc)
+        val film = getItem(position)
         val binding = holder.binding
         when (binding){
             is ItemFilmCardBinding -> {
                     Glide.with(binding.photo.context)
                         .load(film.poster)
-
                         .centerCrop()
                         .into(binding.photo)
             }

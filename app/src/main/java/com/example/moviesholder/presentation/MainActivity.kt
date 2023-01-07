@@ -5,8 +5,11 @@ import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.moviesholder.R
 import com.example.moviesholder.databinding.ActivityMainBinding
+import com.example.moviesholder.domain.MovieFilter
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity() : AppCompatActivity(), FragmentСontrol {
@@ -28,6 +31,11 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
 
 //        val activity = Activity()
 //        Toast.makeText(this,activity.keyboard.toString(),Toast.LENGTH_LONG).show()
+
+        binding.switchSave.setOnCheckedChangeListener{ buttonView, isChecked ->
+            MovieFilter.isPreserved = isChecked
+        }
+
 
 
     }

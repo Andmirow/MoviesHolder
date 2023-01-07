@@ -50,8 +50,9 @@ class MapperFilm {
             mapFilmDbModelToFilm(it)
         }
 
-
-
+        fun mapListDocToFilm(listDoc : List<Doc>) = listDoc.map {
+            mapDocToFilm(it)
+        }
 
     }
 }

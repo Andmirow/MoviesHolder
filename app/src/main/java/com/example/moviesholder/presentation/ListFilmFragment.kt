@@ -94,9 +94,14 @@ class ListFilmFragment : Fragment() {
         recycler.addItemDecoration(dividerItemDecorationVERTICAL)
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
 
+
+
         viewModel.selected.observe(viewLifecycleOwner) {
-            adapter.submitList(it.docs)
+            adapter.submitList(it)
         }
+
+
+
     }
 
 

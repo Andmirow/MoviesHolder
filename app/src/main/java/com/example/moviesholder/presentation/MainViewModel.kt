@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.moviesholder.data.MapperFilm
 import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.retrofit.film_model.FilmModelList
 import com.example.moviesholder.data.room.ItemRepositoryImpl
@@ -22,15 +23,17 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
     private val compositeDisposable = CompositeDisposable()
 
 
-    private val _selected = MutableLiveData<FilmModelList>()
-    val selected: LiveData<FilmModelList>
+
+
+    //private val _selected = MutableLiveData<FilmModelList>()
+    private val _selected = MutableLiveData<List<Film>>()
+    val selected: LiveData<List<Film>>
         get() = _selected
 
 
 
     fun saveFilm(film : Film){
         repository.addFilm(film)
-
     }
 
 
@@ -41,20 +44,22 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
     }
 
     fun fetchList(filmApi: FilmApi?){
-        Log.i("MyResult","fetchList")
-        filmApi?.let { filmApi ->
-            val disposable =filmApi.getFilmList(MovieFilter.token,MovieFilter.search,MovieFilter.field,MovieFilter.sortedField,MovieFilter.sortedType,MovieFilter.page,MovieFilter.limit)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Log.e("TAG", it.docs.size.toString())
-                    _selected.postValue(it)
-                    Log.i("MyResult","good")
-                },{
-                    Log.i("MyResult",it.toString())
-                })
+        if (MovieFilter.isPreserved){
+            val filmList = repository.getListFilm()
+            _selected.postValue(filmList)
+        }else{
+            filmApi?.let { filmApi ->
+                val disposable =filmApi.getFilmList(MovieFilter.token,MovieFilter.search,MovieFilter.field,MovieFilter.sortedField,MovieFilter.sortedType,MovieFilter.page,MovieFilter.limit)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        val listDocToFilm = MapperFilm.mapListDocToFilm(it.docs)
+                        _selected.postValue(listDocToFilm)
+                    },{
+                        Log.i("MyResult",it.toString())
+                    })
+            }
         }
-
     }
 
 
