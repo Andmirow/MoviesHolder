@@ -51,19 +51,18 @@ class FilmInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.tvRating.text = film.rating
         binding.tvDescription.text = film.description
 
         Glide.with(binding.ivPoster.context)
             .load(film.poster)
-            .centerCrop()
+            .fitCenter()
             .into(binding.ivPoster)
 
 
         binding.save.setOnClickListener {
             viewModel.saveFilm(film)
-
-            //Toast.makeText(activity, "Пока не реализовал", Toast.LENGTH_LONG).show()
             howToCloseFragment?.closeFragment()
         }
     }

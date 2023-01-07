@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
-import com.example.moviesholder.data.retrofit.film_model.Doc
 import com.example.moviesholder.databinding.ItemFilmCardBinding
 import com.example.moviesholder.domain.Film
-import com.example.moviesholder.data.MapperFilm
 
 
 class FilmAdapter(private val onClickListener : ((Film)-> Unit),private val onLongClickListener : ((Film)-> Unit)) : ListAdapter<Film, FilmViewHolder>(FilmListDiffItemCallBack()) {

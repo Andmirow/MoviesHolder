@@ -1,9 +1,7 @@
 package com.example.moviesholder.domain
 
-import androidx.lifecycle.LiveData
 import com.example.moviesholder.data.room.database.FilmDbModel
 import io.reactivex.Single
-import org.jetbrains.annotations.NotNull
 
 interface FilmRepository {
 

@@ -10,22 +10,18 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/midle_line"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="1" />
 
             <ImageView
                 android:id="@+id/iv_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/midle_line"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
+
 
             <TextView
                 android:layout_width="match_parent"

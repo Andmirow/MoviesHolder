@@ -2,14 +2,13 @@ package com.example.moviesholder.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.moviesholder.di.FilmApp
 import com.example.moviesholder.databinding.FragmentFilterBinding
+import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.MovieFilter
 
 
@@ -27,7 +26,6 @@ class FilterFragment : Fragment() {
         } else {
             throw RuntimeException("Activity must implement FragmentСontrol")
         }
-        Log.i("MyResult","onAttach")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

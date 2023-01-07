@@ -1,8 +1,7 @@
 package com.example.moviesholder.domain.example1
 
 
-import android.app.Application
-import com.example.moviesholder.di.FilmApp
+import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.di.RetrofitModule
 import dagger.Component
 

@@ -1,7 +1,6 @@
 package com.example.moviesholder.presentation.recycler_view_tools
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.moviesholder.data.retrofit.film_model.Doc
 import com.example.moviesholder.domain.Film
 
 

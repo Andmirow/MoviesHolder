@@ -6,13 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesholder.databinding.FragmentListFilmBinding
-import com.example.moviesholder.di.FilmApp
+import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.MovieFilter
 import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
@@ -37,7 +36,6 @@ class ListFilmFragment : Fragment() {
         } else {
             throw RuntimeException("Activity must implement FragmentСontrol")
         }
-        Log.i("MyResult","onAttach")
     }
 
 
@@ -73,11 +71,10 @@ class ListFilmFragment : Fragment() {
 
 
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        Log.i("testus","onViewStateRestored")
-        viewModel.fetchList((activity?.application as FilmApp).filmApi)
-    }
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        viewModel.fetchList((activity?.application as FilmApp).filmApi)
+//    }
 
 
 
@@ -98,7 +95,6 @@ class ListFilmFragment : Fragment() {
 
 
     fun openFilmCard(film : Film){
-        //Toast.makeText(binding.root.context, "click", Toast.LENGTH_LONG).show()
         fragmentСontrol.openNewFragment(FilmInfoFragment.newInstance(film))
     }
 
