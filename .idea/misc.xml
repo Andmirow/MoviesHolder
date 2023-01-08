@@ -11,14 +11,14 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_blank.xml" value="0.3605072463768116" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_film_info.xml" value="0.3605072463768116" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_filter.xml" value="0.3605072463768116" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_list_film.xml" value="0.2416452442159383" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_list_film.xml" value="0.40764331210191085" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_list_film2.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/fragment_sender.xml" value="0.16077898550724637" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/MoviesHolder/app/src/main/res/layout/item_film_card.xml" value="0.3605072463768116" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

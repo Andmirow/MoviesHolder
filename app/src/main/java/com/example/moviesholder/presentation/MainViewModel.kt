@@ -8,21 +8,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moviesholder.data.MapperFilm
 import com.example.moviesholder.data.retrofit.FilmApi
-import com.example.moviesholder.data.retrofit.film_model.FilmModelList
 import com.example.moviesholder.data.room.ItemRepositoryImpl
+import com.example.moviesholder.di.DaggerFilmComponent
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.MovieFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.annotations.NotNull
+import javax.inject.Inject
 
 class MainViewModel(application : Application) : AndroidViewModel(application){
 
 
     private val appl = application
     private val repository = ItemRepositoryImpl(application)
-    private val compositeDisposable = CompositeDisposable()
+
+    @Inject
+    lateinit var compositeDisposable : CompositeDisposable
+
+
+    init {
+        DaggerFilmComponent.builder().build().inject(this)
+    }
+
+
 
 
 
@@ -44,7 +54,6 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
     }
 
     fun deleteFilm(film : Film){
-
         val disposable = repository.deleteFilm(film)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -53,14 +62,11 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
             },{
                 Log.i("MyResult",it.toString())
             })
-
         val FilmList = selected.value
         val mulableFilmList= FilmList?.toMutableList()
         mulableFilmList?.remove(film)
         _selected.postValue(mulableFilmList?.toList())
     }
-
-
 
     override fun onCleared() {
         compositeDisposable.dispose()
@@ -78,7 +84,6 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
                 },{
                     Log.i("MyResult",it.toString())
                 })
-
         }else{
             filmApi?.let { filmApi ->
                 val disposable =filmApi.getFilmList(MovieFilter.token,MovieFilter.search,MovieFilter.field,MovieFilter.sortedField,MovieFilter.sortedType,MovieFilter.page,MovieFilter.limit)
@@ -93,9 +98,5 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
             }
         }
     }
-
-
-
-
-
 }
+

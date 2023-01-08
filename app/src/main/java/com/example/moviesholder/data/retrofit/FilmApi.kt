@@ -19,7 +19,4 @@ interface FilmApi {
         @Query("limit") limit : String
     ): Single<FilmModelList>
 
-
-
-
 }

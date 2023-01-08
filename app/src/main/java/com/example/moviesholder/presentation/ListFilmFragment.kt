@@ -1,8 +1,8 @@
 package com.example.moviesholder.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesholder.databinding.FragmentListFilmBinding
-import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.Film
+import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.MovieFilter
 import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 
@@ -21,7 +21,7 @@ class ListFilmFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
     lateinit var binding : FragmentListFilmBinding
-    private lateinit var fragmentСontrol : FragmentСontrol
+    private lateinit var fragmentControl : FragmentСontrol
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,20 +32,19 @@ class ListFilmFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is FragmentСontrol) {
-            fragmentСontrol = context
+            fragmentControl = context
         } else {
-            throw RuntimeException("Activity must implement FragmentСontrol")
+            throw RuntimeException("Activity must implement FragmentControl")
         }
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListFilmBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     companion object {
-        private const val FILTER_PARAM = "filter"
 
         @JvmStatic
         fun newInstance() =
@@ -57,28 +56,39 @@ class ListFilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+        setListener()
+    }
 
+    @SuppressLint("SetTextI18n")
+    private fun setListener(){
         binding.filterButton.setOnClickListener {
-            fragmentСontrol.openNewFragment(FilterFragment())
+            fragmentControl.openNewFragment(FilterFragment())
         }
-
         binding.switchSave.setOnCheckedChangeListener{ buttonView, isChecked ->
             MovieFilter.isPreserved = isChecked
             viewModel.fetchList((activity?.application as FilmApp).filmApi)
         }
+        binding.buttonMax.setOnClickListener {
+           MovieFilter.naxtPage()
+            viewModel.fetchList((activity?.application as FilmApp).filmApi)
+            val _page = MovieFilter.page.toInt()
+            binding.buttonMax.text = ">"+ (_page+1).toString()
+            binding.buttonMun.text = "<"+(_page-1).toString()
+        }
+        binding.buttonMun.setOnClickListener {
+            MovieFilter.earlyPage()
+            viewModel.fetchList((activity?.application as FilmApp).filmApi)
+            val _page = MovieFilter.page.toInt()
+            binding.buttonMax.text =">"+ (_page+1).toString()
+            binding.buttonMun.text = "<"+(_page-1).toString()
+        }
+
+
+
 
     }
 
-
-
-//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-//        super.onViewStateRestored(savedInstanceState)
-//        viewModel.fetchList((activity?.application as FilmApp).filmApi)
-//    }
-
-
-
-    fun setRecyclerView(){
+    private fun setRecyclerView(){
         val recycler = binding.rvFilmList
         recycler.layoutManager = GridLayoutManager(activity?.applicationContext, 4)
         val adapter = FilmAdapter(this::openFilmCard,this::deleteFilm)
@@ -87,18 +97,16 @@ class ListFilmFragment : Fragment() {
         val dividerItemDecorationHORIZONTAL = DividerItemDecoration(recycler.context, GridLayoutManager.HORIZONTAL)
         recycler.addItemDecoration(dividerItemDecorationVERTICAL)
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
-
         viewModel.selected.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
 
-
-    fun openFilmCard(film : Film){
-        fragmentСontrol.openNewFragment(FilmInfoFragment.newInstance(film))
+    private fun openFilmCard(film : Film){
+        fragmentControl.openNewFragment(FilmInfoFragment.newInstance(film))
     }
 
-    fun deleteFilm(film : Film){
+    private fun deleteFilm(film : Film){
         viewModel.deleteFilm(film)
     }
 

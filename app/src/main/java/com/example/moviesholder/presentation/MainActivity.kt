@@ -11,7 +11,6 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
 
     lateinit var binding : ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.popBackStack()
@@ -20,7 +19,6 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
         openFragment(ListFilmFragment.newInstance())
     }
 
-
     fun openFragment(fragment : Fragment){
         //supportFragmentManager.popBackStack()
         supportFragmentManager
@@ -28,13 +26,11 @@ class MainActivity() : AppCompatActivity(), FragmentСontrol {
             .add(R.id.fragment_container_view, fragment)
             .addToBackStack(null)
             .commit()
-
     }
 
     override fun openNewFragment(fragment : Fragment) {
         openFragment(fragment)
     }
-
 
     override fun closeFragment() {
         supportFragmentManager.popBackStack()

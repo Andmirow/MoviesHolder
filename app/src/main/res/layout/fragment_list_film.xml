@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/film_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,14 +18,12 @@
 
         <Switch
             android:id="@+id/switchSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="28dp"
             android:text="сохраненные"
-            android:textOff="онтайн"
-            android:textOn="офлайн"
             app:layout_constraintBottom_toTopOf="@+id/midle_line"
             app:layout_constraintEnd_toStartOf="@+id/filter_button"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonMax"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -53,6 +50,24 @@
         android:clickable="true"
         tools:listitem="@layout/item_film_card"/>
 
+        <Button
+            android:id="@+id/buttonMun"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:text="0"
+            app:layout_constraintBottom_toTopOf="@+id/midle_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonMax"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/midle_line"
+            android:text=">2"
+            app:layout_constraintStart_toEndOf="@+id/buttonMun"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

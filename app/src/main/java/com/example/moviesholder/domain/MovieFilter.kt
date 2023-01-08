@@ -37,7 +37,7 @@ object MovieFilter {
 
 
     var page = "1"
-    var limit = "30"
+    var limit = "32"
 
 
     fun naxtPage(){
@@ -47,7 +47,10 @@ object MovieFilter {
 
     fun earlyPage(){
         val _page = page.toInt()
-        page = (_page-1).toString()
+        if(page > 0.toString()){
+            page = (_page-1).toString()
+        }
+
     }
 
 

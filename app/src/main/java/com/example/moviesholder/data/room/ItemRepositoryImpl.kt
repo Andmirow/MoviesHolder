@@ -11,17 +11,7 @@ import org.jetbrains.annotations.NotNull
 
 class ItemRepositoryImpl(application: Application) : FilmRepository {
 
-//    @Inject
-//    lateinit var appDatabase : AppDatabase
-//
-//    private val shopListDao = appDatabase.filmListDao()
-
     private val shopListDao = AppDatabase.getInstance(application).filmListDao()
-
-//    init {
-//        DaggerFilmComponent.builder().build().inject(this)   // create().inject(this)
-//    }
-
 
     override fun getListFilm(): Single<List<FilmDbModel>> {
         return shopListDao.getListFilm()
@@ -44,7 +34,6 @@ class ItemRepositoryImpl(application: Application) : FilmRepository {
         return null
     }
 
-    @NotNull
     override fun addFilm(film: Film) : Single<Unit> {
         val filmChek = findFilmByIdRetrofit(film.idRetrofot)
          return if (filmChek != null) {
@@ -56,8 +45,5 @@ class ItemRepositoryImpl(application: Application) : FilmRepository {
         }else{
             shopListDao.addFilm(MapperFilm.mapFilmToFilmDbModel(film))
         }
-
     }
-
-
 }

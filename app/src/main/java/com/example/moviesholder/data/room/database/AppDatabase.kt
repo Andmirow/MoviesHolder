@@ -11,7 +11,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun filmListDao() : FilmListDao
 
-
     companion object{
         private var INSTANCE : AppDatabase? = null
         private val LOCK = Any()
