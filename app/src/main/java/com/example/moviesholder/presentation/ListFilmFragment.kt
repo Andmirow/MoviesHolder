@@ -82,10 +82,6 @@ class ListFilmFragment : Fragment() {
             binding.buttonMax.text =">"+ (_page+1).toString()
             binding.buttonMun.text = "<"+(_page-1).toString()
         }
-
-
-
-
     }
 
     private fun setRecyclerView(){
