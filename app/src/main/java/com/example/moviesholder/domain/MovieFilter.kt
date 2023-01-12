@@ -41,14 +41,14 @@ object MovieFilter {
 
 
     fun naxtPage(){
-        val _page = page.toInt()
-        page = (_page+1).toString()
+        val intPage = page.toInt()
+        page = (intPage+1).toString()
     }
 
     fun earlyPage(){
-        val _page = page.toInt()
+        val intPage = page.toInt()
         if(page > 0.toString()){
-            page = (_page-1).toString()
+            page = (intPage-1).toString()
         }
 
     }

@@ -13,7 +13,7 @@ class MapperFilm {
             val rating = doc.rating
             val ratingString = rating.imdb.toString()
             return Film(
-                idRetrofot = doc.id,
+                idRetrofit = doc.id,
                 idRoom = 0,
                 name = doc.name,
                 poster = posterUrl,
@@ -26,7 +26,7 @@ class MapperFilm {
             val posterUrl = film.poster
             val rating = film.rating
             return Film(idRoom = film.id,
-                idRetrofot = film.id_Retrofit,
+                idRetrofit = film.id_Retrofit,
                 name = film.name,
                 poster = posterUrl,
                 rating = rating,
@@ -37,7 +37,7 @@ class MapperFilm {
         fun mapFilmToFilmDbModel(film : Film): FilmDbModel =
             film.let {
                 FilmDbModel(
-                    id_Retrofit = it.idRetrofot,
+                    id_Retrofit = it.idRetrofit,
                     id = it.idRoom,
                     name = it.name!!,
                     poster = it.poster!!,

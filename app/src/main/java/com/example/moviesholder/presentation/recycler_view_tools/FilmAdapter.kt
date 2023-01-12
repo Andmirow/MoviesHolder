@@ -11,7 +11,7 @@ import com.example.moviesholder.domain.Film
 
 class FilmAdapter(private val onClickListener : ((Film)-> Unit),private val onLongClickListener : ((Film)-> Unit)) : ListAdapter<Film, FilmViewHolder>(FilmListDiffItemCallBack()) {
 
-    lateinit var binding : ItemFilmCardBinding
+    private lateinit var binding : ItemFilmCardBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         binding = ItemFilmCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)

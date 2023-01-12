@@ -7,7 +7,6 @@ import com.example.moviesholder.data.room.database.FilmDbModel
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmRepository
 import io.reactivex.Single
-import org.jetbrains.annotations.NotNull
 
 class ItemRepositoryImpl(application: Application) : FilmRepository {
 
@@ -35,7 +34,7 @@ class ItemRepositoryImpl(application: Application) : FilmRepository {
     }
 
     override fun addFilm(film: Film) : Single<Unit> {
-        val filmChek = findFilmByIdRetrofit(film.idRetrofot)
+        val filmChek = findFilmByIdRetrofit(film.idRetrofit)
          return if (filmChek != null) {
             shopListDao.addFilm(
                 MapperFilm.mapFilmToFilmDbModel(

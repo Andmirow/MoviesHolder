@@ -15,20 +15,20 @@ import com.example.moviesholder.domain.MovieFilter
 class FilterFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
-    lateinit var binding : FragmentFilterBinding
-    lateinit var fragmentСontrol : FragmentСontrol
+    private lateinit var binding : FragmentFilterBinding
+    private lateinit var fragmentControl : FragmentControl
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is FragmentСontrol) {
-            fragmentСontrol = context
+        if (context is FragmentControl) {
+            fragmentControl = context
         } else {
-            throw RuntimeException("Activity must implement FragmentСontrol")
+            throw RuntimeException("Activity must implement FragmentControl")
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFilterBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -46,7 +46,7 @@ class FilterFragment : Fragment() {
             MovieFilter.sortedField = binding.sortedField.editText?.text.toString()
             MovieFilter.sortedType = binding.sortedType.editText?.text.toString()
             viewModel.fetchList((activity?.application as FilmApp).filmApi)
-            fragmentСontrol.closeFragment()
+            fragmentControl.closeFragment()
         }
 
     }
@@ -57,7 +57,7 @@ class FilterFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             FilterFragment().apply {
                 arguments = Bundle()
             }

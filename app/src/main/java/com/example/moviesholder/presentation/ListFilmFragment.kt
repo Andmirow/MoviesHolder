@@ -20,8 +20,8 @@ import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 class ListFilmFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
-    lateinit var binding : FragmentListFilmBinding
-    private lateinit var fragmentControl : FragmentСontrol
+    private lateinit var binding : FragmentListFilmBinding
+    private lateinit var fragmentControl : FragmentControl
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class ListFilmFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is FragmentСontrol) {
+        if (context is FragmentControl) {
             fragmentControl = context
         } else {
             throw RuntimeException("Activity must implement FragmentControl")
@@ -62,25 +62,25 @@ class ListFilmFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setListener(){
         binding.filterButton.setOnClickListener {
-            fragmentControl.openNewFragment(FilterFragment())
+            fragmentControl.openNewFragment(FilterFragment.newInstance())
         }
-        binding.switchSave.setOnCheckedChangeListener{ buttonView, isChecked ->
+        binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
             MovieFilter.isPreserved = isChecked
             viewModel.fetchList((activity?.application as FilmApp).filmApi)
         }
         binding.buttonMax.setOnClickListener {
            MovieFilter.naxtPage()
             viewModel.fetchList((activity?.application as FilmApp).filmApi)
-            val _page = MovieFilter.page.toInt()
-            binding.buttonMax.text = ">"+ (_page+1).toString()
-            binding.buttonMun.text = "<"+(_page-1).toString()
+            val page = MovieFilter.page.toInt()
+            binding.buttonMax.text = ">"+ (page+1).toString()
+            binding.buttonMun.text = "<"+(page-1).toString()
         }
         binding.buttonMun.setOnClickListener {
             MovieFilter.earlyPage()
             viewModel.fetchList((activity?.application as FilmApp).filmApi)
-            val _page = MovieFilter.page.toInt()
-            binding.buttonMax.text =">"+ (_page+1).toString()
-            binding.buttonMun.text = "<"+(_page-1).toString()
+            val page = MovieFilter.page.toInt()
+            binding.buttonMax.text =">"+ (page+1).toString()
+            binding.buttonMun.text = "<"+(page-1).toString()
         }
     }
 

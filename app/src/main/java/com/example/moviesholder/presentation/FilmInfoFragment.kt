@@ -2,15 +2,12 @@ package com.example.moviesholder.presentation
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
-import com.example.moviesholder.R
-import com.example.moviesholder.data.retrofit.film_model.Doc
 import com.example.moviesholder.databinding.FilmInfoBinding
 import com.example.moviesholder.domain.Film
 
@@ -22,9 +19,9 @@ private const val ARG_FILM = "param1"
 class FilmInfoFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
-    lateinit var film: Film
-    lateinit var binding : FilmInfoBinding
-    private var howToCloseFragment : FragmentСontrol? = null
+    private lateinit var film: Film
+    private lateinit var binding : FilmInfoBinding
+    private var howToCloseFragment : FragmentControl? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class FilmInfoFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is FragmentСontrol) {
+        if (context is FragmentControl) {
             howToCloseFragment = context
         } else {
             throw RuntimeException("Activity must implement OnEditingFinishedListener")

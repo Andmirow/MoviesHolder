@@ -33,9 +33,6 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
     }
 
 
-
-
-
     private val _selected = MutableLiveData<List<Film>>()
     val selected: LiveData<List<Film>>
         get() = _selected
@@ -62,8 +59,8 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
             },{
                 Log.i("MyResult",it.toString())
             })
-        val FilmList = selected.value
-        val mulableFilmList= FilmList?.toMutableList()
+        val filmList = selected.value
+        val mulableFilmList= filmList?.toMutableList()
         mulableFilmList?.remove(film)
         _selected.postValue(mulableFilmList?.toList())
     }
