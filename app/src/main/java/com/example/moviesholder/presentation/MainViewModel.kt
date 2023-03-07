@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moviesholder.data.MapperFilm
 import com.example.moviesholder.data.retrofit.FilmApi
-import com.example.moviesholder.data.room.ItemRepositoryImpl
+import com.example.moviesholder.data.ItemRepositoryImpl
 import com.example.moviesholder.di.DaggerFilmComponent
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.MovieFilter
@@ -87,7 +87,7 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val listDocToFilm = MapperFilm.mapListDocToFilm(it.docs)
+                        val listDocToFilm = MapperFilm.mapListDocToFilm(it.docs, it.page)
                         _selected.postValue(listDocToFilm)
                     },{
                         Log.i("MyResult",it.toString())

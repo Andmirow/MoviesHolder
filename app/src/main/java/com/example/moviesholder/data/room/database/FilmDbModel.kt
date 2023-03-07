@@ -12,5 +12,7 @@ data class FilmDbModel(
     val name : String,
     val poster : String,
     val rating : String,
-    val description : String
+    val description : String,
+    val page : Int,
+    val isFavorite : Boolean
 )

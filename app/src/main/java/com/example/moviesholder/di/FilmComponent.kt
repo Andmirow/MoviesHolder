@@ -1,6 +1,6 @@
 package com.example.moviesholder.di
 
-import com.example.moviesholder.data.room.ItemRepositoryImpl
+import com.example.moviesholder.data.ItemRepositoryImpl
 import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.presentation.MainViewModel
 import dagger.Component

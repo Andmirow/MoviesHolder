@@ -7,7 +7,7 @@ import com.example.moviesholder.domain.Film
 class MapperFilm {
     companion object{
 
-        fun mapDocToFilm(doc : Doc): Film {
+        fun mapDocToFilm(doc : Doc, page : Int): Film {
             val poster = doc.poster
             val posterUrl = poster?.url
             val rating = doc.rating
@@ -18,7 +18,9 @@ class MapperFilm {
                 name = doc.name,
                 poster = posterUrl,
                 rating = ratingString,
-                description = doc.description
+                description = doc.description,
+                page = page,
+                isFavorite = false
             )
         }
 
@@ -30,7 +32,9 @@ class MapperFilm {
                 name = film.name,
                 poster = posterUrl,
                 rating = rating,
-                description = film.description
+                description = film.description,
+                page = film.page,
+                isFavorite = film.isFavorite
             )
         }
 
@@ -42,7 +46,9 @@ class MapperFilm {
                     name = it.name!!,
                     poster = it.poster!!,
                     rating= it.rating!!,
-                    description= it.description!!
+                    description= it.description!!,
+                    page = it.page,
+                    isFavorite = it.isFavorite
                 )
             }
 
@@ -50,8 +56,8 @@ class MapperFilm {
             mapFilmDbModelToFilm(it)
         }
 
-        fun mapListDocToFilm(listDoc : List<Doc>) = listDoc.map {
-            mapDocToFilm(it)
+        fun mapListDocToFilm(listDoc : List<Doc>, page : Int) = listDoc.map {
+            mapDocToFilm(it,page)
         }
 
     }

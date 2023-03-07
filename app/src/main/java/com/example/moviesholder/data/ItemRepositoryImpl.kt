@@ -1,4 +1,4 @@
-package com.example.moviesholder.data.room
+package com.example.moviesholder.data
 
 import android.app.Application
 import com.example.moviesholder.data.MapperFilm

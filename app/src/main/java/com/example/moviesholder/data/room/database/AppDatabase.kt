@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun filmListDao() : FilmListDao
+    abstract fun filmsKeysDao(): RemoteKeysDao
+
 
     companion object{
         private var INSTANCE : AppDatabase? = null
