@@ -59,7 +59,7 @@ class FilmInfoFragment : Fragment() {
 
 
         binding.save.setOnClickListener {
-            viewModel.saveFilm(film)
+            //viewModel.saveFilm(film)
             howToCloseFragment?.closeFragment()
         }
     }

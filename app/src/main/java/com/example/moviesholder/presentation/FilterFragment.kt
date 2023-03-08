@@ -45,7 +45,7 @@ class FilterFragment : Fragment() {
             MovieFilter.field = binding.field.editText?.text.toString()
             MovieFilter.sortedField = binding.sortedField.editText?.text.toString()
             MovieFilter.sortedType = binding.sortedType.editText?.text.toString()
-            viewModel.fetchList((activity?.application as FilmApp).filmApi)
+           // viewModel.fetchList((activity?.application as FilmApp).filmApi)
             fragmentControl.closeFragment()
         }
 

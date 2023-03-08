@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FilmDbModel::class], version = 1, exportSchema = false)
+@Database(entities = [FilmsDb.FilmDbModel::class, FilmsDb.FilmRemoteKeys::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun filmListDao() : FilmListDao

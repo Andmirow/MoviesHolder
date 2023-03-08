@@ -1,7 +1,8 @@
 package com.example.moviesholder.data
 
 import com.example.moviesholder.data.retrofit.film_model.Doc
-import com.example.moviesholder.data.room.database.FilmDbModel
+import com.example.moviesholder.data.retrofit.film_model.FilmModelList
+import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.domain.Film
 
 class MapperFilm {
@@ -19,12 +20,32 @@ class MapperFilm {
                 poster = posterUrl,
                 rating = ratingString,
                 description = doc.description,
-                page = page,
                 isFavorite = false
             )
         }
 
-        fun mapFilmDbModelToFilm(film : FilmDbModel): Film {
+
+        fun mapDocToFilmDbModel(doc : Doc): FilmsDb.FilmDbModel {
+            val poster = doc.poster
+            val rating = doc.rating
+            val ratingString = rating.imdb.toString()
+            return doc.let {
+                FilmsDb.FilmDbModel(
+                    id_Retrofit = it.id,
+                    id = 0,
+                    name = it.name,
+                    poster = poster?.url!!,
+                    rating= ratingString,
+                    description= it.description,
+                    isFavorite = false
+                )
+            }
+        }
+
+
+
+
+        fun mapFilmDbModelToFilm(film : FilmsDb.FilmDbModel): Film {
             val posterUrl = film.poster
             val rating = film.rating
             return Film(idRoom = film.id,
@@ -33,26 +54,36 @@ class MapperFilm {
                 poster = posterUrl,
                 rating = rating,
                 description = film.description,
-                page = film.page,
                 isFavorite = film.isFavorite
             )
         }
 
-        fun mapFilmToFilmDbModel(film : Film): FilmDbModel =
+        fun mapFilmsRetroToFilmsDb(filmModelList : FilmModelList): FilmsDb{
+            val listFilm = filmModelList.docs.map{
+                mapDocToFilmDbModel(it)
+            }
+            return FilmsDb(
+                movies = listFilm,
+                page = filmModelList.page,
+                pages = filmModelList.pages,
+            )
+        }
+
+
+        fun mapFilmToFilmDbModel(film : Film): FilmsDb.FilmDbModel =
             film.let {
-                FilmDbModel(
+                FilmsDb.FilmDbModel(
                     id_Retrofit = it.idRetrofit,
                     id = it.idRoom,
                     name = it.name!!,
                     poster = it.poster!!,
                     rating= it.rating!!,
                     description= it.description!!,
-                    page = it.page,
                     isFavorite = it.isFavorite
                 )
             }
 
-        fun mapListDbItemToEmtity(listItemDbModel : List<FilmDbModel>) = listItemDbModel.map {
+        fun mapListDbItemToEmtity(listItemDbModel : List<FilmsDb.FilmDbModel>) = listItemDbModel.map {
             mapFilmDbModelToFilm(it)
         }
 
