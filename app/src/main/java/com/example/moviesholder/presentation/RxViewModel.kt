@@ -15,9 +15,6 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class RxViewModel @Inject constructor(private val repository: RemoteRepositoryImpl) : ViewModel(){
 
-//    @Inject
-//    lateinit var repository : FilmRepository
-
 
 
     fun getMovies(): Flowable<PagingData<FilmsDb.FilmDbModel>> {

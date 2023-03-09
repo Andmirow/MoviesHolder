@@ -29,20 +29,6 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
     private val appl = application
 
-//    @Inject
-//    @Singleton
-//    lateinit var filmApi : FilmApi
-
-//    private val base = AppDatabase.getInstance(application)
-//    private val mediator = FilmsRxRemoteMediator(filmApi,base)
-//    private val repository= RemoteRepositoryImpl(base,mediator)
-
-//    init {
-//        DaggerFilmComponent.builder().build().inject(this)
-//    }
-
-
-
 
     fun getMovies(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
 

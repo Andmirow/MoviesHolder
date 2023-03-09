@@ -61,10 +61,10 @@ interface FilmListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<FilmsDb.FilmDbModel>)
 
-    @Query("SELECT * FROM films ORDER BY id ASC")
+    @Query("SELECT * FROM films WHERE NOT isFavorite ORDER BY id ASC")
     fun selectAll(): PagingSource<Int, FilmsDb.FilmDbModel>
 
-    @Query("DELETE FROM films")
+    @Query("DELETE FROM films WHERE NOT isFavorite")
     fun clearMovies()
 
 
