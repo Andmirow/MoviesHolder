@@ -7,6 +7,7 @@ import androidx.paging.filter
 import androidx.paging.rxjava2.cachedIn
 import com.example.moviesholder.data.RemoteRepositoryImpl
 import com.example.moviesholder.data.room.database.FilmsDb
+import com.example.moviesholder.domain.FilmRepository
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class RxViewModel @Inject constructor(private val repository: RemoteRepositoryImpl) : ViewModel(){
 
-
+//    @Inject
+//    lateinit var repository : FilmRepository
 
 
 

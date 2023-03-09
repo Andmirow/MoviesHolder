@@ -37,7 +37,7 @@ object MovieFilter {
 
 
     var page = "1"
-    var limit = "32"
+    var limit = "30"
 
 
     fun naxtPage(){

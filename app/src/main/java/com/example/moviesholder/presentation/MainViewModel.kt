@@ -1,33 +1,56 @@
 package com.example.moviesholder.presentation
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.rxjava2.cachedIn
+import com.example.moviesholder.data.FilmsRxRemoteMediator
 import com.example.moviesholder.data.RemoteRepositoryImpl
+import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
+import com.example.moviesholder.di.DaggerFilmComponent
+import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.FilmRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
-
-@ExperimentalCoroutinesApi
-@HiltViewModel
-class MainViewModel @Inject constructor(
-    private val repository: FilmRepository
-) : ViewModel(){
+import javax.inject.Singleton
 
 
+class MainViewModel (application : Application) : AndroidViewModel(application){
+
+
+    private val appl = application
+
+//    @Inject
+//    @Singleton
+//    lateinit var filmApi : FilmApi
+
+//    private val base = AppDatabase.getInstance(application)
+//    private val mediator = FilmsRxRemoteMediator(filmApi,base)
+//    private val repository= RemoteRepositoryImpl(base,mediator)
+
+//    init {
+//        DaggerFilmComponent.builder().build().inject(this)
+//    }
 
 
 
 
+    fun getMovies(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
 
-    fun getMovies(): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+         val base = AppDatabase.getInstance(appl)
+         val mediator = FilmsRxRemoteMediator(filmApi,base)
+         val repository= RemoteRepositoryImpl(base,mediator)
+
+
         return repository
             .getMovies()
             .map { pagingData -> pagingData.filter { it.poster != null } }

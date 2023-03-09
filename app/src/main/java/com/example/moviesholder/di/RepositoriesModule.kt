@@ -11,13 +11,13 @@ import dagger.hilt.components.SingletonComponent
 
 @ExperimentalPagingApi
 @Module
-@InstallIn(SingletonComponent::class)
+//@InstallIn(SingletonComponent::class)
 interface RepositoriesModule {
 
-    @Binds
-    fun bindFilmsRepository(
-        filmsRepository: RemoteRepositoryImpl
-    ): FilmRepository
+//    @Binds
+//    fun bindFilmsRepository(
+//        filmsRepository: RemoteRepositoryImpl
+//    ): FilmRepository
 
 
 

@@ -1,5 +1,6 @@
 package com.example.moviesholder.data
 
+import android.util.Log
 import com.example.moviesholder.data.retrofit.film_model.Doc
 import com.example.moviesholder.data.retrofit.film_model.FilmModelList
 import com.example.moviesholder.data.room.database.FilmsDb
@@ -12,7 +13,7 @@ class MapperFilm {
             val poster = doc.poster
             val posterUrl = poster?.url
             val rating = doc.rating
-            val ratingString = rating.imdb.toString()
+            val ratingString = rating?.imdb.toString()
             return Film(
                 idRetrofit = doc.id,
                 idRoom = 0,
@@ -26,15 +27,16 @@ class MapperFilm {
 
 
         fun mapDocToFilmDbModel(doc : Doc): FilmsDb.FilmDbModel {
+            Log.i("MyResult", "mapDocToFilmDbModel $doc")
             val poster = doc.poster
             val rating = doc.rating
-            val ratingString = rating.imdb.toString()
+            val ratingString = rating?.imdb.toString()
             return doc.let {
                 FilmsDb.FilmDbModel(
                     id_Retrofit = it.id,
                     id = 0,
                     name = it.name,
-                    poster = poster?.url!!,
+                    poster = poster?.url,
                     rating= ratingString,
                     description= it.description,
                     isFavorite = false
@@ -59,9 +61,11 @@ class MapperFilm {
         }
 
         fun mapFilmsRetroToFilmsDb(filmModelList : FilmModelList): FilmsDb{
+            Log.i("MyResult", "mapFilmsRetroToFilmsDb $filmModelList")
             val listFilm = filmModelList.docs.map{
                 mapDocToFilmDbModel(it)
             }
+            Log.i("MyResult", "mapFilmsRetroToFilmsDb_1 $listFilm")
             return FilmsDb(
                 movies = listFilm,
                 page = filmModelList.page,

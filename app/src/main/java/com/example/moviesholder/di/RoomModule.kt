@@ -3,6 +3,8 @@ package com.example.moviesholder.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.example.moviesholder.data.FilmsRxRemoteMediator
+import com.example.moviesholder.data.RemoteRepositoryImpl
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmListDao
 import com.example.moviesholder.data.room.database.RemoteKeysDao
@@ -49,10 +51,19 @@ class RoomModule {
     }
 
 
+    @Provides
+    fun provideFilmsRepository(database: AppDatabase, remoteMediator: FilmsRxRemoteMediator): RemoteRepositoryImpl{
+        return RemoteRepositoryImpl(database,remoteMediator)
+    }
+
+
 
     private companion object {
         const val DB_NAME = "movies_holder.db"
     }
+
+
+
 
 
 

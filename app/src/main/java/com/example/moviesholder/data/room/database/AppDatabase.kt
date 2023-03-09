@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FilmsDb.FilmDbModel::class, FilmsDb.FilmRemoteKeys::class], version = 2, exportSchema = false)
+@Database(entities = [FilmsDb.FilmDbModel::class, FilmsDb.FilmRemoteKeys::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun filmListDao() : FilmListDao
@@ -15,7 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object{
         private var INSTANCE : AppDatabase? = null
         private val LOCK = Any()
-        private const val DB_NAME = "movies_holder.db"
+        private const val DB_NAME = "movies_holder_RM2.db"
         fun getInstance(application: Application): AppDatabase{
             INSTANCE?.let {
                 return it

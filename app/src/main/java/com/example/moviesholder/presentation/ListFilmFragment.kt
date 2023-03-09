@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,8 +31,8 @@ import io.reactivex.disposables.CompositeDisposable
 
 class ListFilmFragment : Fragment() {
 
-    //private val viewModel: RxViewModel by activityViewModels()
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel: MainViewModel by activityViewModels()
+    //private lateinit var RxViewModel :MainViewModel
     private lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentControl : FragmentControl
 
@@ -59,8 +61,8 @@ class ListFilmFragment : Fragment() {
 
         val view = binding.root
 
+        Log.i("MyResult","onCreateView")
         setRecyclerView(view)
-
 
 
 
@@ -101,7 +103,6 @@ class ListFilmFragment : Fragment() {
         }
         binding.buttonMun.setOnClickListener {
             MovieFilter.earlyPage()
-            //viewModel.fetchList((activity?.application as FilmApp).filmApi)
             val page = MovieFilter.page.toInt()
             binding.buttonMax.text =">"+ (page+1).toString()
             binding.buttonMun.text = "<"+(page-1).toString()
@@ -143,15 +144,11 @@ class ListFilmFragment : Fragment() {
 
 
 
-        mDisposable.add(viewModel.getMovies().subscribe {
+        mDisposable.add(viewModel.getMovies((activity?.application as FilmApp).filmApi).subscribe {
+            Log.i("MyResult", "getMovies$it")
             mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
         })
 
-
-
-//        viewModel.selected.observe(viewLifecycleOwner) {
-//            adapter.submitList(it)
-//        }
     }
 
     private fun openFilmCard(film : Film){

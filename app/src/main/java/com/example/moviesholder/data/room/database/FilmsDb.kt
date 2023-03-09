@@ -24,10 +24,10 @@ data class FilmsDb(
         @PrimaryKey(autoGenerate = true)
         val id : Int = 0,
         val id_Retrofit : Int,
-        val name : String,
-        val poster : String,
-        val rating : String,
-        val description : String,
+        val name : String?,
+        val poster : String?,
+        val rating : String?,
+        val description : String?,
         val isFavorite : Boolean
     ): Parcelable
 
