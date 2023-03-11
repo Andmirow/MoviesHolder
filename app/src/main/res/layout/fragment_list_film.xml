@@ -51,23 +51,16 @@
         tools:listitem="@layout/item_film_card"/>
 
         <Button
-            android:id="@+id/buttonMun"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="0"
+            android:text="refresh"
             app:layout_constraintBottom_toTopOf="@+id/midle_line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/buttonMax"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/midle_line"
-            android:text=">2"
-            app:layout_constraintStart_toEndOf="@+id/buttonMun"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

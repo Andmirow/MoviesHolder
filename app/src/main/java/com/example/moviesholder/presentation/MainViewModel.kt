@@ -9,13 +9,16 @@ import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.rxjava2.cachedIn
 import com.example.moviesholder.data.FilmsRxRemoteMediator
+import com.example.moviesholder.data.GetFilmsPagingSource
 import com.example.moviesholder.data.RemoteRepositoryImpl
 import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.di.DaggerFilmComponent
+import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.FilmRepository
+import com.example.moviesholder.domain.MovieFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,20 +31,81 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
 
     private val appl = application
+    lateinit var base : AppDatabase
+    lateinit var mediator : FilmsRxRemoteMediator
+    lateinit var  repository: RemoteRepositoryImpl
+    lateinit var localPagingSource : GetFilmsPagingSource
 
 
-    fun getMovies(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+    private fun init(filmApi : FilmApi){
+        base = AppDatabase.getInstance(appl)
+        mediator = FilmsRxRemoteMediator(filmApi,base)
+        localPagingSource = GetFilmsPagingSource(base)
+        repository= RemoteRepositoryImpl(base,mediator,localPagingSource)
+    }
 
-         val base = AppDatabase.getInstance(appl)
-         val mediator = FilmsRxRemoteMediator(filmApi,base)
-         val repository= RemoteRepositoryImpl(base,mediator)
 
 
-        return repository
-            .getMovies()
+//    private val _selected = MutableLiveData<List<Film>>()
+//    val selected: LiveData<List<Film>>
+//        get() = _selected
+
+
+
+    @ExperimentalCoroutinesApi
+    fun getFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+
+        init(filmApi)
+
+        if (MovieFilter.isPreserved){
+            return repository.getFavoriteFilms()
+                .map { pagingData -> pagingData.filter { it.poster != null } }
+                .cachedIn(viewModelScope)
+        }else{
+            return repository
+                .getFilms()
+                .map { pagingData -> pagingData.filter { it.poster != null } }
+                .cachedIn(viewModelScope)
+        }
+
+    }
+
+
+    fun getfavoriteFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+
+        init(filmApi)
+
+        return repository.getFavoriteFilms()
             .map { pagingData -> pagingData.filter { it.poster != null } }
             .cachedIn(viewModelScope)
     }
+
+
+
+
+
+
+    fun saveFavoriteFilm(film : Film, filmApi : FilmApi) {
+
+        init(filmApi)
+        return repository.saveFavoriteFilm(film)
+
+    }
+
+
+    fun deleteFilm(film : Film, filmApi : FilmApi){
+        init(filmApi)
+
+        repository.deleteFilm(film)
+    }
+
+
+    fun refresh(){
+        repository.refresh()
+        //getFilms()
+    }
+
+
 
 
 

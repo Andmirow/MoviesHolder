@@ -7,17 +7,14 @@ import io.reactivex.Single
 
 interface FilmRepository {
 
-    fun getListFilm() : Single<List<FilmsDb.FilmDbModel>>
-    fun deleteFilm(film : Film): Single<Int>
-    fun findFilmByIdRoom(id : Int) : Film
-    fun findFilmByIdRetrofit(id : Int) : Film?
-    fun addFilm(film : Film): Single<Unit>
+    fun deleteFilm(film : Film)
 
+    fun saveFavoriteFilm(film : Film)
 
-    fun getMovies(): Flowable<PagingData<FilmsDb.FilmDbModel>>
+    fun getFavoriteFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>>
 
+    fun getFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>>
 
-
-
+    fun refresh()
 
 }

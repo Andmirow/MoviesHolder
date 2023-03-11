@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.example.moviesholder.databinding.FilmInfoBinding
 import com.example.moviesholder.domain.Film
+import com.example.moviesholder.domain.FilmApp
 
 
 private const val ARG_FILM = "param1"
@@ -59,7 +60,7 @@ class FilmInfoFragment : Fragment() {
 
 
         binding.save.setOnClickListener {
-            //viewModel.saveFilm(film)
+            viewModel.saveFavoriteFilm(film,(activity?.application as FilmApp).filmApi)
             howToCloseFragment?.closeFragment()
         }
     }

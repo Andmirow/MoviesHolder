@@ -17,12 +17,17 @@ class RxViewModel @Inject constructor(private val repository: RemoteRepositoryIm
 
 
 
-    fun getMovies(): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+    fun getFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>> {
         return repository
-            .getMovies()
+            .getFilms()
             .map { pagingData -> pagingData.filter { it.poster != null } }
             .cachedIn(viewModelScope)
     }
+
+
+
+
+
 
 
 

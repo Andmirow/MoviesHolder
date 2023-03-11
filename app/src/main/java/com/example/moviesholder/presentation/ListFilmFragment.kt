@@ -85,33 +85,23 @@ class ListFilmFragment : Fragment() {
         setListener()
     }
 
-    @SuppressLint("SetTextI18n")
+
     private fun setListener(){
         binding.filterButton.setOnClickListener {
             fragmentControl.openNewFragment(FilterFragment.newInstance())
         }
         binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
             MovieFilter.isPreserved = isChecked
-            //viewModel.fetchList((activity?.application as FilmApp).filmApi)
         }
-        binding.buttonMax.setOnClickListener {
-           MovieFilter.naxtPage()
-            //viewModel.fetchList((activity?.application as FilmApp).filmApi)
-            val page = MovieFilter.page.toInt()
-            binding.buttonMax.text = ">"+ (page+1).toString()
-            binding.buttonMun.text = "<"+(page-1).toString()
-        }
-        binding.buttonMun.setOnClickListener {
-            MovieFilter.earlyPage()
-            val page = MovieFilter.page.toInt()
-            binding.buttonMax.text =">"+ (page+1).toString()
-            binding.buttonMun.text = "<"+(page-1).toString()
+
+        binding.refresh.setOnClickListener {
+            viewModel.refresh()
         }
     }
 
     private fun setRecyclerView(view : View){
         val recycler = binding.rvFilmList
-        recycler.layoutManager = GridLayoutManager(view.context, 4)
+        recycler.layoutManager = GridLayoutManager(view.context, 2)
         //val adapter = FilmAdapter(this::openFilmCard,this::deleteFilm)
         recycler.adapter = mAdapter
         recycler.adapter = mAdapter.withLoadStateFooter(
@@ -125,7 +115,7 @@ class ListFilmFragment : Fragment() {
 
             errorState?.let {
                 AlertDialog.Builder(view.context)
-                    .setTitle("error")
+                    .setTitle("error2")
                     .setMessage(it.error.localizedMessage)
                     .setNegativeButton("cancel") { dialog, _ ->
                         dialog.dismiss()
@@ -144,7 +134,7 @@ class ListFilmFragment : Fragment() {
 
 
 
-        mDisposable.add(viewModel.getMovies((activity?.application as FilmApp).filmApi).subscribe {
+        mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
             Log.i("MyResult", "getMovies$it")
             mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
         })
@@ -156,7 +146,7 @@ class ListFilmFragment : Fragment() {
     }
 
     private fun deleteFilm(film : Film){
-        //viewModel.deleteFilm(film)
+        viewModel.deleteFilm(film,(activity?.application as FilmApp).filmApi)
     }
 
 

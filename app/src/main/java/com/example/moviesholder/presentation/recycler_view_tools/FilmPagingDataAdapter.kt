@@ -1,11 +1,14 @@
 package com.example.moviesholder.presentation.recycler_view_tools
 
+import android.media.AudioRecord.MetricsConstants.SOURCE
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.moviesholder.R
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.databinding.ItemFilmCardBinding
 import com.example.moviesholder.domain.Film
@@ -34,6 +37,8 @@ class FilmPagingDataAdapter(
                     Glide.with(binding.photo.context)
                         .load(film.poster)
                         .centerCrop()
+
+                        .placeholder(R.drawable.ic_no_image)
                         .into(binding.photo)
                 }
             }

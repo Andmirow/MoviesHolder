@@ -28,7 +28,7 @@ data class FilmsDb(
         val poster : String?,
         val rating : String?,
         val description : String?,
-        val isFavorite : Boolean
+        var isFavorite : Boolean
     ): Parcelable
 
 
