@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -27,6 +28,11 @@ import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 import com.example.moviesholder.presentation.recycler_view_tools.FilmPagingDataAdapter
 import com.example.moviesholder.presentation.recycler_view_tools.LoadingGridStateAdapter
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class ListFilmFragment : Fragment() {
@@ -35,10 +41,8 @@ class ListFilmFragment : Fragment() {
     //private lateinit var RxViewModel :MainViewModel
     private lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentControl : FragmentControl
-
+    private val scope = CoroutineScope(Dispatchers.IO)
     private lateinit var mAdapter: FilmPagingDataAdapter
-
-    private val mDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +99,9 @@ class ListFilmFragment : Fragment() {
         }
 
         binding.refresh.setOnClickListener {
-            viewModel.refresh()
+            scope.launch{
+                viewModel.refresh()
+            }
         }
     }
 
@@ -133,11 +139,18 @@ class ListFilmFragment : Fragment() {
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
 
 
+        lifecycleScope.launch {
+            viewModel.getFilms((activity?.application as FilmApp).filmApi).collectLatest {
+                mAdapter.submitData(it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
+            }
+        }
 
-        mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
-            Log.i("MyResult", "getMovies$it")
-            mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
-        })
+
+
+//        mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
+//            Log.i("MyResult", "getMovies$it")
+//            mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
+//        })
 
     }
 
@@ -146,12 +159,11 @@ class ListFilmFragment : Fragment() {
     }
 
     private fun deleteFilm(film : Film){
-        viewModel.deleteFilm(film,(activity?.application as FilmApp).filmApi)
+        //viewModel.deleteFilm(film,(activity?.application as FilmApp).filmApi)
     }
 
-
     override fun onDestroyView() {
-        mDisposable.dispose()
+        scope.cancel()
         super.onDestroyView()
     }
 }

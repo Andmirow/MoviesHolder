@@ -60,7 +60,7 @@ class FilmInfoFragment : Fragment() {
 
 
         binding.save.setOnClickListener {
-            viewModel.saveFavoriteFilm(film,(activity?.application as FilmApp).filmApi)
+            //viewModel.saveFavoriteFilm(film,(activity?.application as FilmApp).filmApi)
             howToCloseFragment?.closeFragment()
         }
     }

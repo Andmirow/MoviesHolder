@@ -8,34 +8,34 @@ import io.reactivex.Single
 interface FilmListDao {
 
     @Query("DELETE FROM films WHERE id=:itemId AND isFavorite")
-    fun deleteFilm(itemId : Int): Single<Int>
+    suspend fun deleteFilm(itemId : Int)
 //
 //    @Query("SELECT * FROM films WHERE id=:itemId LIMIT 1")
 //    fun getFilmById(itemId : Int) : FilmsDb.FilmDbModel
 //
 
     @Query("SELECT * FROM films WHERE id_Retrofit=:itemIdRetrofit AND isFavorite LIMIT 1")
-    fun getFilmByIdRetrofit(itemIdRetrofit : Int) : FilmsDb.FilmDbModel
+    suspend fun getFilmByIdRetrofit(itemIdRetrofit : Int) : FilmsDb.FilmDbModel
 
 
 
     @Query("SELECT * FROM films WHERE isFavorite ORDER BY id ASC")
-    fun selectFavoriteFilms(): Single<List<FilmsDb.FilmDbModel>>
+    fun selectFavoriteFilms(): PagingSource<Int, FilmsDb.FilmDbModel>
 
 
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveFavoriteFilm(itemDbModel: FilmsDb.FilmDbModel)//: Single<Int>
+    suspend fun saveFavoriteFilm(itemDbModel: FilmsDb.FilmDbModel)//: Single<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(movies: List<FilmsDb.FilmDbModel>)
+    suspend fun insertAll(movies: List<FilmsDb.FilmDbModel>)
 
     @Query("SELECT * FROM films WHERE NOT isFavorite ORDER BY id ASC")
     fun selectAll(): PagingSource<Int, FilmsDb.FilmDbModel>
 
     @Query("DELETE FROM films WHERE NOT isFavorite")
-    fun clearMovies()
+    suspend fun clearMovies()
 
 
 

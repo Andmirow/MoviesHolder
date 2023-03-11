@@ -1,6 +1,7 @@
 package com.example.moviesholder.data
 
 import androidx.paging.LoadType
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.example.moviesholder.data.room.database.AppDatabase
@@ -13,21 +14,22 @@ import javax.inject.Inject
 
 class GetFilmsPagingSource @Inject constructor(
     private val database: AppDatabase
-    ) : RxPagingSource<Int, FilmsDb.FilmDbModel>() {
+    ) : PagingSource<Int, FilmsDb.FilmDbModel>() {
 
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, FilmsDb.FilmDbModel>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FilmsDb.FilmDbModel> {
 
-        val position = params.key ?: 1
+//        val position = params.key ?: 1
+//
+//        return database.filmListDao().selectFavoriteFilms()
+//            .subscribeOn(Schedulers.io())
+//            .map {
+//                toLoadResult(it, position) }
+//            .onErrorReturn {LoadResult.Error(it)  }
 
-        return database.filmListDao().selectFavoriteFilms()
-            .subscribeOn(Schedulers.io())
-            .map {
-                toLoadResult(it, position) }
-            .onErrorReturn {LoadResult.Error(it)  }
-
-
+        TODO()
     }
+
 
     private fun toLoadResult(data: List<FilmsDb.FilmDbModel>, position: Int): LoadResult<Int, FilmsDb.FilmDbModel> {
         return LoadResult.Page(

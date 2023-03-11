@@ -7,13 +7,13 @@ import androidx.room.*
 interface RemoteKeysDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(remoteKey: List<FilmsDb.FilmRemoteKeys>)
+    suspend fun insertAll(remoteKey: List<FilmsDb.FilmRemoteKeys>)
 
     @Query("SELECT * FROM film_remote_keys WHERE id = :movieId")
-    fun remoteKeysByMovieId(movieId: Int): FilmsDb.FilmRemoteKeys?
+    suspend fun remoteKeysByMovieId(movieId: Int): FilmsDb.FilmRemoteKeys?
 
     @Query("DELETE FROM film_remote_keys")
-    fun clearRemoteKeys()
+    suspend fun clearRemoteKeys()
 
 
 }

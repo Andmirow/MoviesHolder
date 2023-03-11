@@ -1,18 +1,13 @@
 package com.example.moviesholder.data
 
-import android.content.Context
 import androidx.paging.*
 import androidx.paging.rxjava2.flowable
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmRepository
-import dagger.assisted.AssistedInject
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteRepositoryImpl @Inject constructor(
     private val database: AppDatabase,
-    private val remoteMediator: FilmsRxRemoteMediator,
+    private val remoteMediator: FilmsRemoteMediator,
     private val getFilmsPagingSource : GetFilmsPagingSource
     ) : FilmRepository {
 
@@ -35,53 +30,30 @@ class RemoteRepositoryImpl @Inject constructor(
             initialLoadSize = 40)
     }
 
-
-
-
-    override fun getFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+    override fun getFilms(): Flow<PagingData<FilmsDb.FilmDbModel>> {
         return Pager(
             config = pagingConfig,
             remoteMediator = remoteMediator,
             pagingSourceFactory = { database.filmListDao().selectAll() }
-        ).flowable
+        ).flow
     }
 
 
-    override fun getFavoriteFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+    override fun getFavoriteFilms(): Flow<PagingData<FilmsDb.FilmDbModel>> {
         return Pager(
             config = pagingConfig,
             //remoteMediator = remoteMediator,
             pagingSourceFactory = { getFilmsPagingSource }
-        ).flowable
+        ).flow
     }
 
 
-
-    @Suppress("DEPRECATION")
-    override fun refresh() {
-
-        database.beginTransaction()
-        try {
-            database.filmListDao().clearMovies()
-            database.setTransactionSuccessful()
-        } finally {
-            database.endTransaction()
-        }
-
-
-
-//        database.filmListDao().clearMovies()
-//            .subscribeOn(Schedulers.io())
-//            .map {
-//                toLoadResult(it, position) }
-//            .onErrorReturn { PagingSource.LoadResult.Error(it)  }
-//
-//
-//        TODO("Not yet implemented")
+    override suspend fun refresh() {
+        database.filmListDao().clearMovies()
     }
 
 
-    override fun saveFavoriteFilm(film: Film) {
+    override suspend fun saveFavoriteFilm(film: Film) {
 
 //        val copy = film.copy(isFavorite = true)
 //        val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
@@ -105,12 +77,7 @@ class RemoteRepositoryImpl @Inject constructor(
     }
 
 
-
-
-
-
-
-    override fun deleteFilm(film: Film) {
+    override suspend fun deleteFilm(film: Film) {
         database.filmListDao().deleteFilm(film.idRoom)
     }
 

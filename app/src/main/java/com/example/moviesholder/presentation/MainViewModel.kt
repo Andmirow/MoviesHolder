@@ -2,29 +2,23 @@ package com.example.moviesholder.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.rxjava2.cachedIn
-import com.example.moviesholder.data.FilmsRxRemoteMediator
+import com.example.moviesholder.data.FilmsRemoteMediator
 import com.example.moviesholder.data.GetFilmsPagingSource
 import com.example.moviesholder.data.RemoteRepositoryImpl
 import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
-import com.example.moviesholder.di.DaggerFilmComponent
 import com.example.moviesholder.domain.Film
-import com.example.moviesholder.domain.FilmApp
-import com.example.moviesholder.domain.FilmRepository
 import com.example.moviesholder.domain.MovieFilter
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.jetbrains.annotations.NotNull
-import javax.inject.Inject
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class MainViewModel (application : Application) : AndroidViewModel(application){
@@ -32,52 +26,38 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
     private val appl = application
     lateinit var base : AppDatabase
-    lateinit var mediator : FilmsRxRemoteMediator
+    lateinit var mediator : FilmsRemoteMediator
     lateinit var  repository: RemoteRepositoryImpl
     lateinit var localPagingSource : GetFilmsPagingSource
 
 
     private fun init(filmApi : FilmApi){
         base = AppDatabase.getInstance(appl)
-        mediator = FilmsRxRemoteMediator(filmApi,base)
+        mediator = FilmsRemoteMediator(filmApi,base)
         localPagingSource = GetFilmsPagingSource(base)
         repository= RemoteRepositoryImpl(base,mediator,localPagingSource)
     }
 
 
 
-//    private val _selected = MutableLiveData<List<Film>>()
-//    val selected: LiveData<List<Film>>
-//        get() = _selected
 
-
-
-    @ExperimentalCoroutinesApi
-    fun getFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
-
+    fun getFilms(filmApi : FilmApi): Flow<PagingData<FilmsDb.FilmDbModel>> {
         init(filmApi)
-
-        if (MovieFilter.isPreserved){
-            return repository.getFavoriteFilms()
-                .map { pagingData -> pagingData.filter { it.poster != null } }
-                .cachedIn(viewModelScope)
-        }else{
-            return repository
-                .getFilms()
-                .map { pagingData -> pagingData.filter { it.poster != null } }
-                .cachedIn(viewModelScope)
-        }
+        return  repository.getFilms()
+            .map { pagingData -> pagingData.filter { it.poster != null } }
+            .cachedIn(viewModelScope)
 
     }
 
 
     fun getfavoriteFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
 
-        init(filmApi)
-
-        return repository.getFavoriteFilms()
-            .map { pagingData -> pagingData.filter { it.poster != null } }
-            .cachedIn(viewModelScope)
+        TODO()
+//        init(filmApi)
+//
+//        return repository.getFavoriteFilms()
+//            .map { pagingData -> pagingData.filter { it.poster != null } }
+//            .cachedIn(viewModelScope)
     }
 
 
@@ -85,7 +65,7 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
 
 
-    fun saveFavoriteFilm(film : Film, filmApi : FilmApi) {
+    suspend fun saveFavoriteFilm(film : Film, filmApi : FilmApi) {
 
         init(filmApi)
         return repository.saveFavoriteFilm(film)
@@ -93,14 +73,14 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
     }
 
 
-    fun deleteFilm(film : Film, filmApi : FilmApi){
+    suspend fun deleteFilm(film : Film, filmApi : FilmApi){
         init(filmApi)
 
         repository.deleteFilm(film)
     }
 
 
-    fun refresh(){
+    suspend fun refresh(){
         repository.refresh()
         //getFilms()
     }

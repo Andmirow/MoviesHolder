@@ -3,7 +3,7 @@ package com.example.moviesholder.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.example.moviesholder.data.FilmsRxRemoteMediator
+import com.example.moviesholder.data.FilmsRemoteMediator
 import com.example.moviesholder.data.GetFilmsPagingSource
 import com.example.moviesholder.data.RemoteRepositoryImpl
 import com.example.moviesholder.data.room.database.AppDatabase
@@ -14,7 +14,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
 
@@ -56,7 +55,7 @@ class RoomModule {
 
 
     @Provides
-    fun provideFilmsRepository(database: AppDatabase, remoteMediator: FilmsRxRemoteMediator, ps : GetFilmsPagingSource): RemoteRepositoryImpl{
+    fun provideFilmsRepository(database: AppDatabase, remoteMediator: FilmsRemoteMediator, ps : GetFilmsPagingSource): RemoteRepositoryImpl{
         return RemoteRepositoryImpl(database,remoteMediator,ps)
     }
 

@@ -4,17 +4,26 @@ import androidx.paging.PagingData
 import com.example.moviesholder.data.room.database.FilmsDb
 import io.reactivex.Flowable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 
 interface FilmRepository {
 
-    fun deleteFilm(film : Film)
+    suspend fun deleteFilm(film : Film)
 
-    fun saveFavoriteFilm(film : Film)
+    suspend fun saveFavoriteFilm(film : Film)
 
-    fun getFavoriteFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>>
+    fun getFavoriteFilms(): Flow<PagingData<FilmsDb.FilmDbModel>>
 
-    fun getFilms(): Flowable<PagingData<FilmsDb.FilmDbModel>>
+    fun getFilms(): Flow<PagingData<FilmsDb.FilmDbModel>>
 
-    fun refresh()
+    suspend fun refresh()
+
+
+
+
+
+
+
+
 
 }
