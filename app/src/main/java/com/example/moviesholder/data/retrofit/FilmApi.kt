@@ -20,17 +20,4 @@ interface FilmApi {
     ): Single<FilmModelList>
 
 
-//    @GET("./movie")
-//    @Headers("Content-Type: application/json")
-//    suspend fun getFilmListCor(
-//        @Query("token") token : String,
-//        @Query("search") search : String,
-//        @Query("field") field : String,
-//        @Query("sortField") sortField : String,
-//        @Query("sortType") sortType : String,
-//        @Query("page") page : String,
-//        @Query("limit") limit : String
-//    ): FilmModelList
-
-
 }

@@ -1,10 +1,7 @@
 package com.example.moviesholder.presentation
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.filter
 import androidx.paging.rxjava2.cachedIn
@@ -46,14 +43,16 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
 
 
-//    private val _selected = MutableLiveData<List<Film>>()
-//    val selected: LiveData<List<Film>>
+//    private val _selected = MutableLiveData<List<FilmsDb.FilmDbModel>>()
+//    val selected : LiveData<List<FilmsDb.FilmDbModel>>
 //        get() = _selected
 
 
 
     @ExperimentalCoroutinesApi
     fun getFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
+
+
 
         init(filmApi)
 

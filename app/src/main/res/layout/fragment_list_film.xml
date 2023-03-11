@@ -23,7 +23,7 @@
             android:text="сохраненные"
             app:layout_constraintBottom_toTopOf="@+id/midle_line"
             app:layout_constraintEnd_toStartOf="@+id/filter_button"
-            app:layout_constraintStart_toEndOf="@+id/buttonMax"
+            app:layout_constraintStart_toEndOf="@+id/refresh"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -38,17 +38,28 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@+id/midle_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="42dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_film_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/midle_line"
-        android:clickable="true"
-        tools:listitem="@layout/item_film_card"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_film_list"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/midle_line"
+                android:clickable="true"
+                tools:listitem="@layout/item_film_card"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <Button
             android:id="@+id/refresh"

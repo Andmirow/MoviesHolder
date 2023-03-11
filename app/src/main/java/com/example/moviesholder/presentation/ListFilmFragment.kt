@@ -96,6 +96,7 @@ class ListFilmFragment : Fragment() {
 
         binding.refresh.setOnClickListener {
             viewModel.refresh()
+            mAdapter.retry()
         }
     }
 
@@ -104,6 +105,8 @@ class ListFilmFragment : Fragment() {
         recycler.layoutManager = GridLayoutManager(view.context, 2)
         //val adapter = FilmAdapter(this::openFilmCard,this::deleteFilm)
         recycler.adapter = mAdapter
+
+
         recycler.adapter = mAdapter.withLoadStateFooter(
             footer = LoadingGridStateAdapter()
         )
