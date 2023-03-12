@@ -9,18 +9,15 @@ interface FilmListDao {
 
     @Query("DELETE FROM films WHERE id=:itemId AND isFavorite")
     suspend fun deleteFilm(itemId : Int)
-//
-//    @Query("SELECT * FROM films WHERE id=:itemId LIMIT 1")
-//    fun getFilmById(itemId : Int) : FilmsDb.FilmDbModel
-//
+
 
     @Query("SELECT * FROM films WHERE id_Retrofit=:itemIdRetrofit AND isFavorite LIMIT 1")
     suspend fun getFilmByIdRetrofit(itemIdRetrofit : Int) : FilmsDb.FilmDbModel
 
 
 
-    @Query("SELECT * FROM films WHERE isFavorite ORDER BY id ASC")
-    fun selectFavoriteFilms(): PagingSource<Int, FilmsDb.FilmDbModel>
+    @Query("SELECT * FROM films WHERE isFavorite")
+    suspend fun selectFavoriteFilms(): List<FilmsDb.FilmDbModel>
 
 
 

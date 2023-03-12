@@ -95,7 +95,10 @@ class ListFilmFragment : Fragment() {
             fragmentControl.openNewFragment(FilterFragment.newInstance())
         }
         binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
-            MovieFilter.isPreserved = isChecked
+           // MovieFilter.isPreserved = isChecked
+            viewModel.isPreserved = isChecked
+
+
         }
 
         binding.refresh.setOnClickListener {
@@ -159,11 +162,13 @@ class ListFilmFragment : Fragment() {
     }
 
     private fun deleteFilm(film : Film){
-        //viewModel.deleteFilm(film,(activity?.application as FilmApp).filmApi)
+        scope.launch {
+            viewModel.deleteFilm(film, (activity?.application as FilmApp).filmApi)
+        }
     }
 
     override fun onDestroyView() {
-        scope.cancel()
         super.onDestroyView()
+        scope.cancel()
     }
 }

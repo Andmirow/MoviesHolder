@@ -19,7 +19,7 @@ class RemoteRepositoryImpl @Inject constructor(
     private val getFilmsPagingSource : GetFilmsPagingSource
     ) : FilmRepository {
 
-    lateinit var pagingConfig : PagingConfig
+    var pagingConfig : PagingConfig
 
     init {
         pagingConfig = PagingConfig(
@@ -42,7 +42,6 @@ class RemoteRepositoryImpl @Inject constructor(
     override fun getFavoriteFilms(): Flow<PagingData<FilmsDb.FilmDbModel>> {
         return Pager(
             config = pagingConfig,
-            //remoteMediator = remoteMediator,
             pagingSourceFactory = { getFilmsPagingSource }
         ).flow
     }
@@ -54,26 +53,9 @@ class RemoteRepositoryImpl @Inject constructor(
 
 
     override suspend fun saveFavoriteFilm(film: Film) {
-
-//        val copy = film.copy(isFavorite = true)
-//        val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
-//
-//        database.filmListDao().saveFavoriteFilm(favoriteFilmDb)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe()
-//
-//
-
-
-
-//        Single.just(film)
-//            .subscribeOn(Schedulers.io())
-//            .flatMap{
-//                database.filmListDao().saveFavoriteFilm(MapperFilm.mapFilmToFilmDbModel(it))
-//            }
-
-
+        val copy = film.copy(idRoom = 0, isFavorite = true)
+        val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
+        database.filmListDao().saveFavoriteFilm(favoriteFilmDb)
     }
 
 

@@ -1,8 +1,7 @@
 package com.example.moviesholder.presentation
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
@@ -15,13 +14,18 @@ import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.MovieFilter
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-
-class MainViewModel (application : Application) : AndroidViewModel(application){
+@ExperimentalCoroutinesApi
+@HiltViewModel
+class MainViewModel @Inject constructor( application : Application) : AndroidViewModel(application){
 
 
     private val appl = application
@@ -40,25 +44,45 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
 
 
+    private val _isPreserved = MutableLiveData<Boolean>()//savedStateHandle.getLiveData(KEY_Preserved,false)
+    var isPreserved: Boolean?
+        get() = _isPreserved.value
+        set(value) {
+            _isPreserved.value = value
+        }
+
+
+
+//    var year: Int?
+//        get() = yearLiveData.value
+//        set(value) {
+//            yearLiveData.value = value
+//        }
+//
+//
+//    private val launchesFlow = yearLiveData.asFlow()
+//        .distinctUntilChanged()
+//        .flatMapLatest {
+//            launchesRepository.getLaunches(it)
+//        }
+//        .cachedIn(viewModelScope)
+
 
     fun getFilms(filmApi : FilmApi): Flow<PagingData<FilmsDb.FilmDbModel>> {
+
         init(filmApi)
-        return  repository.getFilms()
-            .map { pagingData -> pagingData.filter { it.poster != null } }
-            .cachedIn(viewModelScope)
+        return if (MovieFilter.isPreserved) {
+            repository.getFavoriteFilms()
+                .map { pagingData -> pagingData.filter { it.poster != null } }
+                .cachedIn(viewModelScope)
 
-    }
+        }else{
+            repository.getFilms()
+                .map { pagingData -> pagingData.filter { it.poster != null } }
+                .cachedIn(viewModelScope)
+            }
+        }
 
-
-    fun getfavoriteFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
-
-        TODO()
-//        init(filmApi)
-//
-//        return repository.getFavoriteFilms()
-//            .map { pagingData -> pagingData.filter { it.poster != null } }
-//            .cachedIn(viewModelScope)
-    }
 
 
 
@@ -75,8 +99,12 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
     suspend fun deleteFilm(film : Film, filmApi : FilmApi){
         init(filmApi)
-
         repository.deleteFilm(film)
+    }
+
+
+    private companion object {
+        const val KEY_Preserved = "KEY_Preserved"
     }
 
 

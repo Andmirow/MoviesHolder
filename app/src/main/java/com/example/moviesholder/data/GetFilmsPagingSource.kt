@@ -19,27 +19,19 @@ class GetFilmsPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FilmsDb.FilmDbModel> {
 
-//        val position = params.key ?: 1
-//
-//        return database.filmListDao().selectFavoriteFilms()
-//            .subscribeOn(Schedulers.io())
-//            .map {
-//                toLoadResult(it, position) }
-//            .onErrorReturn {LoadResult.Error(it)  }
-
-        TODO()
+        val position = params.key ?: 1
+        return try {
+            database.filmListDao().selectFavoriteFilms().run {
+                LoadResult.Page(
+                    data = this,
+                    prevKey = if (position == 1) null else position - 1,
+                    nextKey = if (position == this.size) null else position + 1
+                )
+            }
+        }catch (e: Exception) {
+            return LoadResult.Error(e)
+        }
     }
-
-
-    private fun toLoadResult(data: List<FilmsDb.FilmDbModel>, position: Int): LoadResult<Int, FilmsDb.FilmDbModel> {
-        return LoadResult.Page(
-            data = data,
-            prevKey = if (position == 1) null else position - 1,
-            nextKey = if (position == data.size) null else position + 1
-        )
-    }
-
-
 
     override fun getRefreshKey(state: PagingState<Int, FilmsDb.FilmDbModel>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
