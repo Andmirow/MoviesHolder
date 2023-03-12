@@ -2,6 +2,7 @@ package com.example.moviesholder.presentation
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,7 @@ class FilmInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.i("MyFilm", film.toString())
         binding.tvRating.text = film.rating
         binding.tvDescription.text = film.description
 

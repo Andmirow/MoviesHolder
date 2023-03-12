@@ -79,10 +79,10 @@ class MapperFilm {
                 FilmsDb.FilmDbModel(
                     id_Retrofit = it.idRetrofit,
                     id = it.idRoom,
-                    name = it.name!!,
-                    poster = it.poster!!,
-                    rating= it.rating!!,
-                    description= it.description!!,
+                    name = it.name,
+                    poster = it.poster,
+                    rating= it.rating,
+                    description= it.description,
                     isFavorite = it.isFavorite
                 )
             }

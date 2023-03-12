@@ -9,8 +9,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 
-@ExperimentalPagingApi
-@Module
+//@ExperimentalPagingApi
+//@Module
 //@InstallIn(SingletonComponent::class)
 interface RepositoriesModule {
 

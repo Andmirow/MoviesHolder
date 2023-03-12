@@ -1,6 +1,7 @@
 package com.example.moviesholder.data
 
 import android.content.Context
+import android.util.Log
 import androidx.paging.*
 import androidx.paging.rxjava2.flowable
 import com.example.moviesholder.data.room.database.AppDatabase
@@ -60,6 +61,9 @@ class RemoteRepositoryImpl @Inject constructor(
     @Suppress("DEPRECATION")
     override fun refresh() {
 
+
+
+
         database.beginTransaction()
         try {
             database.filmListDao().clearMovies()
@@ -70,34 +74,34 @@ class RemoteRepositoryImpl @Inject constructor(
 
 
 
-//        database.filmListDao().clearMovies()
-//            .subscribeOn(Schedulers.io())
-//            .map {
-//                toLoadResult(it, position) }
-//            .onErrorReturn { PagingSource.LoadResult.Error(it)  }
-//
-//
 //        TODO("Not yet implemented")
     }
 
 
-    override fun saveFavoriteFilm(film: Film) {
-
-        val copy = film.copy(idRoom = 0,  isFavorite = true)
-        val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
-
-        database.filmListDao().saveFavoriteFilm(favoriteFilmDb)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-
+    fun findFilmByIdRetrofit(id: Int): FilmsDb.FilmDbModel? {
+        return database.filmListDao().getFilmByIdRetrofit(id)
     }
 
 
+    fun saveFilm(film: Film): Single<Unit>? {
+
+//        val e = findFilmByIdRetrofit(film.idRetrofit)
+//        Log.i("MyFilm", e.toString())
+//        if (e == null){
+            val copy = film.copy(idRoom = 0,  isFavorite = true)
+            val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
+            return database.filmListDao().saveFavoriteFilm(favoriteFilmDb)
+//        }
+//        return null
+    }
 
 
-
-
+    override fun saveFavoriteFilm(film: Film) {
+        saveFilm(film)
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe()
+    }
 
     override fun deleteFilm(film: Film) {
         database.filmListDao().deleteFilm(film.idRoom)
@@ -105,8 +109,5 @@ class RemoteRepositoryImpl @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
-
-
-
 
 }

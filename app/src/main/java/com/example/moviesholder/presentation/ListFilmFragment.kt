@@ -35,15 +35,9 @@ class ListFilmFragment : Fragment() {
     //private lateinit var RxViewModel :MainViewModel
     private lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentControl : FragmentControl
-
     private lateinit var mAdapter: FilmPagingDataAdapter
-
     private val mDisposable = CompositeDisposable()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //viewModel.fetchList((activity?.application as FilmApp).filmApi)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -91,9 +85,9 @@ class ListFilmFragment : Fragment() {
             fragmentControl.openNewFragment(FilterFragment.newInstance())
         }
         binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
-            MovieFilter.isPreserved = isChecked
+            viewModel.isPreserved = isChecked
 
-            mAdapter.retry()
+            //mAdapter.retry()
             mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
                 Log.i("MyResult", "getMovies$it")
                 mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
@@ -102,7 +96,7 @@ class ListFilmFragment : Fragment() {
 
         binding.refresh.setOnClickListener {
             viewModel.refresh()
-            mAdapter.retry()
+            //mAdapter.retry()
         }
     }
 
