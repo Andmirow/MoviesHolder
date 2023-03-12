@@ -19,19 +19,19 @@ interface FilmListDao {
 
 
 
-    @Query("SELECT * FROM films WHERE isFavorite ORDER BY id ASC")
+    @Query("SELECT * FROM films WHERE isFavorite")
     fun selectFavoriteFilms(): Single<List<FilmsDb.FilmDbModel>>
 
 
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveFavoriteFilm(itemDbModel: FilmsDb.FilmDbModel)//: Single<Int>
+    fun saveFavoriteFilm(itemDbModel: FilmsDb.FilmDbModel): Single<Unit>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<FilmsDb.FilmDbModel>)
 
-    @Query("SELECT * FROM films WHERE NOT isFavorite ORDER BY id ASC")
+    @Query("SELECT * FROM films WHERE NOT isFavorite")
     fun selectAll(): PagingSource<Int, FilmsDb.FilmDbModel>
 
     @Query("DELETE FROM films WHERE NOT isFavorite")

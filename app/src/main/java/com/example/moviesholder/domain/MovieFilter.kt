@@ -2,7 +2,7 @@ package com.example.moviesholder.domain
 
 object MovieFilter {
 
-    var isPreserved = false
+    var isPreserved = true
 
 
     var token = "54PEKD1-QV741T0-NHKSR4H-2JXE7A4"
@@ -18,6 +18,7 @@ object MovieFilter {
 
 
     var page = "1"
+
     var limit = "20"
 
 

@@ -92,6 +92,12 @@ class ListFilmFragment : Fragment() {
         }
         binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
             MovieFilter.isPreserved = isChecked
+
+            mAdapter.retry()
+            mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
+                Log.i("MyResult", "getMovies$it")
+                mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
+            })
         }
 
         binding.refresh.setOnClickListener {
@@ -150,6 +156,7 @@ class ListFilmFragment : Fragment() {
 
     private fun deleteFilm(film : Film){
         viewModel.deleteFilm(film,(activity?.application as FilmApp).filmApi)
+        //mAdapter.retry()
     }
 
 

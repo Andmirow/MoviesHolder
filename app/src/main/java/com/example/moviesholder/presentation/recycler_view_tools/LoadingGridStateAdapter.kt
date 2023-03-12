@@ -10,10 +10,7 @@ class LoadingGridStateAdapter: LoadStateAdapter<LoadingGridStateViewHolder>() {
         holder.bind(loadState)
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        loadState: LoadState
-    ): LoadingGridStateViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadingGridStateViewHolder {
         return LoadingGridStateViewHolder.create(parent)
     }
 }

@@ -83,24 +83,13 @@ class RemoteRepositoryImpl @Inject constructor(
 
     override fun saveFavoriteFilm(film: Film) {
 
-//        val copy = film.copy(isFavorite = true)
-//        val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
-//
-//        database.filmListDao().saveFavoriteFilm(favoriteFilmDb)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe()
-//
-//
+        val copy = film.copy(idRoom = 0,  isFavorite = true)
+        val favoriteFilmDb = MapperFilm.mapFilmToFilmDbModel(copy)
 
-
-
-//        Single.just(film)
-//            .subscribeOn(Schedulers.io())
-//            .flatMap{
-//                database.filmListDao().saveFavoriteFilm(MapperFilm.mapFilmToFilmDbModel(it))
-//            }
-
+        database.filmListDao().saveFavoriteFilm(favoriteFilmDb)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
 
     }
 
@@ -112,6 +101,9 @@ class RemoteRepositoryImpl @Inject constructor(
 
     override fun deleteFilm(film: Film) {
         database.filmListDao().deleteFilm(film.idRoom)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 
 

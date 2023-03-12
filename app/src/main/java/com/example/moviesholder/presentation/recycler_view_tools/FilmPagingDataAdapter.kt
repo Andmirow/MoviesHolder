@@ -30,6 +30,7 @@ class FilmPagingDataAdapter(
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
         val film = getItem(position)
+        Log.i("film_1", "film ${film.toString()}")
         val binding = holder.binding
         when (binding){
             is ItemFilmCardBinding -> {

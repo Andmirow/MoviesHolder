@@ -6,19 +6,19 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+
 data class FilmsDb(
 
     val movies: List<FilmDbModel>,
     val page: Int,
     val pages: Int,
 
-): Parcelable {
+) {
 
     @IgnoredOnParcel
     val endOfPage = pages == page
 
-    @Parcelize
+
     @Entity(tableName = "films")
     data class FilmDbModel(
         @PrimaryKey(autoGenerate = true)
@@ -29,17 +29,17 @@ data class FilmsDb(
         val rating : String?,
         val description : String?,
         var isFavorite : Boolean
-    ): Parcelable
+    )
 
 
-    @Parcelize
+
     @Entity(tableName = "film_remote_keys")
     data class FilmRemoteKeys(
         @PrimaryKey
         val id : Int,
         val prevKey: Int?,
         val nextKey: Int?
-    ): Parcelable
+    )
 
 }
 

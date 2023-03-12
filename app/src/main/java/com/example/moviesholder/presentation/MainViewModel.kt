@@ -19,6 +19,7 @@ import com.example.moviesholder.domain.MovieFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
 import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -56,13 +57,12 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
         init(filmApi)
 
-        if (MovieFilter.isPreserved){
-            return repository.getFavoriteFilms()
+        return if (MovieFilter.isPreserved){
+            repository.getFavoriteFilms()
                 .map { pagingData -> pagingData.filter { it.poster != null } }
                 .cachedIn(viewModelScope)
         }else{
-            return repository
-                .getFilms()
+            repository.getFilms()
                 .map { pagingData -> pagingData.filter { it.poster != null } }
                 .cachedIn(viewModelScope)
         }
