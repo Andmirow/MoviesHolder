@@ -34,7 +34,7 @@ class RemoteRepositoryImpl @Inject constructor(
         return Pager(
             config = pagingConfig,
             remoteMediator = remoteMediator,
-            pagingSourceFactory = { database.filmListDao().selectAll() }
+            pagingSourceFactory = {database.filmListDao().selectAll() }
         ).flow
     }
 

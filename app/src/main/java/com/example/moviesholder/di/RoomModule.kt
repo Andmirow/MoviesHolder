@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.moviesholder.data.FilmsRemoteMediator
 import com.example.moviesholder.data.GetFilmsPagingSource
+import com.example.moviesholder.data.GetRetrofitFilmsPagingSource
 import com.example.moviesholder.data.RemoteRepositoryImpl
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmListDao

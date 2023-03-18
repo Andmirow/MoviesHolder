@@ -98,7 +98,13 @@ class ListFilmFragment : Fragment() {
            // MovieFilter.isPreserved = isChecked
             viewModel.isPreserved = isChecked
 
+            scope.launch {
+                viewModel.getFilms((activity?.application as FilmApp).filmApi).collectLatest {
+                    mAdapter.submitData(it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
+                }
+            }
 
+            mAdapter.refresh()
         }
 
         binding.refresh.setOnClickListener {
@@ -142,7 +148,7 @@ class ListFilmFragment : Fragment() {
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
 
 
-        lifecycleScope.launch {
+        scope.launch {
             viewModel.getFilms((activity?.application as FilmApp).filmApi).collectLatest {
                 mAdapter.submitData(it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
             }

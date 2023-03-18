@@ -82,74 +82,7 @@ class FilmsRemoteMediator @Inject constructor(
         catch (e: Exception) {
             return MediatorResult.Error(e)
     }
-
-//            .flatMap { page ->
-//                if (page == INVALID_PAGE) {
-//                    Log.i("MyResult", "INVALID_PAGE ${page}")
-//                    Single.just(MediatorResult.Success(endOfPaginationReached = true))
-//                } else {
-//                    Log.i("MyResult", "INVALID_PAGE_else ${page}")
-//
-//                    service.getFilmList(
-//                        MovieFilter.token,
-//                        MovieFilter.search,
-//                        MovieFilter.field,
-//                        MovieFilter.sortedField,
-//                        MovieFilter.sortedType,
-//                        page.toString(),
-//                        MovieFilter.limit)
-//                        .map {
-//                            Log.i("MyResult", "service.getFilmList_map_1 $it")
-//                            MapperFilm.mapFilmsRetroToFilmsDb(it)
-//                        }
-//                        .map {
-//                            Log.i("MyResult", "service.getFilmList_map_2 $it")
-//                            insertToDb(page, loadType, it)
-//                        }
-//                        .map<MediatorResult> {
-//                            Log.i("MyResult", "service.getFilmList_map_3 ${it.endOfPage}")
-//                            MediatorResult.Success(endOfPaginationReached = it.endOfPage)
-//                        }
-//                        .onErrorReturn {
-//                            Log.i("MyResult", "onErrorReturn ${it}")
-//                            MediatorResult.Error(it)
-//                        }
-//                }
-//
-//            }
-//            .onErrorReturn { MediatorResult.Error(it) }
     }
-
-
-//    @Suppress("DEPRECATION")
-//    private fun insertToDb(page: Int, loadType: LoadType, data: FilmsDb): FilmsDb {
-//
-//        Log.i("MyResult", "insertToDb ${data.toString()}")
-//
-//        database.beginTransaction()
-//
-//        try {
-//            if (loadType == LoadType.REFRESH) {
-//                database.filmsKeysDao().clearRemoteKeys()
-//                database.filmListDao().clearMovies()
-//            }
-//
-//            val prevKey = if (page == 1) null else page - 1
-//            val nextKey = if (data.endOfPage) null else page + 1
-//            val keys = data.movies.map {
-//                FilmsDb.FilmRemoteKeys(id = it.id_Retrofit, prevKey = prevKey, nextKey = nextKey)
-//            }
-//            database.filmsKeysDao().insertAll(keys)
-//            database.filmListDao().insertAll(data.movies)
-//            database.setTransactionSuccessful()
-//
-//        } finally {
-//            database.endTransaction()
-//        }
-//
-//        return data
-//    }
-
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, FilmsDb.FilmDbModel>): FilmsDb.FilmRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
@@ -165,19 +98,14 @@ class FilmsRemoteMediator @Inject constructor(
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, FilmsDb.FilmDbModel>): FilmsDb.FilmRemoteKeys? {
         Log.i("MyResult", "getRemoteKeyClosestToCurrentPosition ${state}")
-
         val res = state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id_Retrofit?.let { id ->
                 database.filmsKeysDao().remoteKeysByMovieId(id)
             }
-
-
         }
 
         Log.i("MyResult", "getRemoteKeyClosestToCurrentPosition ${res}")
         return res
-
-
     }
 
 

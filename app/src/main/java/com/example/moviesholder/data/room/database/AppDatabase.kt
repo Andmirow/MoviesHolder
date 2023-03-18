@@ -15,7 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object{
         private var INSTANCE : AppDatabase? = null
         private val LOCK = Any()
-        private const val DB_NAME = "movies_holder_RM3.db"
+        private const val DB_NAME = "movies_holder_RM4.db"
         fun getInstance(application: Application): AppDatabase{
             INSTANCE?.let {
                 return it
