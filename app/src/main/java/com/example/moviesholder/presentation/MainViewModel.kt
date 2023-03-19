@@ -45,7 +45,7 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
 
 
 
-    private val _isPreserved = MutableLiveData<Boolean>()
+    private val _isPreserved = MutableLiveData(false)
     var isPreserved : Boolean?
         get() = _isPreserved.value
         set(value) {
@@ -57,26 +57,28 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
     @ExperimentalCoroutinesApi
     fun getFilms(filmApi : FilmApi): Flowable<PagingData<FilmsDb.FilmDbModel>> {
         init(filmApi)
-        return if (isPreserved == true){
-            repository.getFavoriteFilms().distinct()
-                .map { pagingData -> pagingData
-                        .filter {
-                            Log.i("MyFilm", it.toString())
-                            it.poster != null
-                            }
-                    }
-                .cachedIn(viewModelScope)
+        val flowablePagingData =  if (isPreserved == true){
+            repository.getFavoriteFilms()
         }else{
             repository.getFilms()
-                .map { pagingData -> pagingData.filter { it.poster != null } }
-                .cachedIn(viewModelScope)
         }
+        flowablePagingData
+            .map {
+                    pagingData ->
+                pagingData
+                    .filter {
+                        it.poster != null
+                    }
+            }
+            .distinct()
+            .cachedIn(viewModelScope)
+        return flowablePagingData
     }
 
 
 
     fun saveFavoriteFilm(film : Film, filmApi : FilmApi) {
-        return repository.saveFavoriteFilm(film)
+        repository.saveFavoriteFilm(film)
     }
 
 

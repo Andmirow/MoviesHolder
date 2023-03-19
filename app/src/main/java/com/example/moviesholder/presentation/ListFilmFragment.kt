@@ -95,8 +95,7 @@ class ListFilmFragment : Fragment() {
         }
 
         binding.refresh.setOnClickListener {
-            viewModel.refresh()
-            //mAdapter.retry()
+            mAdapter.refresh()
         }
     }
 

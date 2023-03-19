@@ -1,16 +1,15 @@
 package com.example.moviesholder.data
 
-import android.content.Context
-import android.util.Log
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmRepository
-import dagger.assisted.AssistedInject
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,7 +24,7 @@ class RemoteRepositoryImpl @Inject constructor(
     private val getFilmsPagingSource : GetFilmsPagingSource
     ) : FilmRepository {
 
-    lateinit var pagingConfig : PagingConfig
+    var pagingConfig : PagingConfig
 
     init {
         pagingConfig = PagingConfig(
