@@ -1,6 +1,5 @@
 package com.example.moviesholder.presentation
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -8,13 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,11 +17,9 @@ import com.example.moviesholder.data.MapperFilm
 import com.example.moviesholder.databinding.FragmentListFilmBinding
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmApp
-import com.example.moviesholder.domain.MovieFilter
-import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 import com.example.moviesholder.presentation.recycler_view_tools.FilmPagingDataAdapter
 import com.example.moviesholder.presentation.recycler_view_tools.LoadingGridStateAdapter
-import io.reactivex.disposables.CompositeDisposable
+import com.example.moviesholder.presentation.viewmodels.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -38,16 +30,11 @@ import kotlinx.coroutines.launch
 class ListFilmFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
-    //private lateinit var RxViewModel :MainViewModel
     private lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentControl : FragmentControl
     private val scope = CoroutineScope(Dispatchers.IO)
     private lateinit var mAdapter: FilmPagingDataAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //viewModel.fetchList((activity?.application as FilmApp).filmApi)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -66,7 +53,7 @@ class ListFilmFragment : Fragment() {
         val view = binding.root
 
         Log.i("MyResult","onCreateView")
-        setRecyclerView(view)
+
 
 
 
@@ -85,7 +72,7 @@ class ListFilmFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //setRecyclerView()
+        setRecyclerView(view)
         setListener()
     }
 
@@ -95,7 +82,6 @@ class ListFilmFragment : Fragment() {
             fragmentControl.openNewFragment(FilterFragment.newInstance())
         }
         binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
-           // MovieFilter.isPreserved = isChecked
             viewModel.isPreserved = isChecked
 
             scope.launch {
@@ -103,21 +89,17 @@ class ListFilmFragment : Fragment() {
                     mAdapter.submitData(it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
                 }
             }
-
-            mAdapter.refresh()
+            //mAdapter.refresh()
         }
 
         binding.refresh.setOnClickListener {
-            scope.launch{
-                viewModel.refresh()
-            }
+            mAdapter.refresh()
         }
     }
 
     private fun setRecyclerView(view : View){
         val recycler = binding.rvFilmList
         recycler.layoutManager = GridLayoutManager(view.context, 2)
-        //val adapter = FilmAdapter(this::openFilmCard,this::deleteFilm)
         recycler.adapter = mAdapter
         recycler.adapter = mAdapter.withLoadStateFooter(
             footer = LoadingGridStateAdapter()
@@ -147,20 +129,11 @@ class ListFilmFragment : Fragment() {
         recycler.addItemDecoration(dividerItemDecorationVERTICAL)
         recycler.addItemDecoration(dividerItemDecorationHORIZONTAL)
 
-
         scope.launch {
             viewModel.getFilms((activity?.application as FilmApp).filmApi).collectLatest {
                 mAdapter.submitData(it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
             }
         }
-
-
-
-//        mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
-//            Log.i("MyResult", "getMovies$it")
-//            mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
-//        })
-
     }
 
     private fun openFilmCard(film : Film){

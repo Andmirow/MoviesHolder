@@ -5,17 +5,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.paging.rxjava2.RxRemoteMediator
 import androidx.room.withTransaction
 import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.room.database.AppDatabase
-import com.example.moviesholder.data.room.database.FilmRemoteKeys
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.domain.MovieFilter
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 import javax.inject.Inject
 
@@ -103,7 +97,6 @@ class FilmsRemoteMediator @Inject constructor(
                 database.filmsKeysDao().remoteKeysByMovieId(id)
             }
         }
-
         Log.i("MyResult", "getRemoteKeyClosestToCurrentPosition ${res}")
         return res
     }

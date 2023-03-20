@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesholder.R
 import com.example.moviesholder.databinding.LoadingGridItemBinding
 
-class LoadingGridStateViewHolder(
-    private val binding: LoadingGridItemBinding
-    ) : RecyclerView.ViewHolder(binding.root){
+class LoadingGridStateViewHolder(private val binding: LoadingGridItemBinding ) : RecyclerView.ViewHolder(binding.root){
 
     fun bind(loadState: LoadState) {
         binding.progressBar.isVisible = loadState is LoadState.Loading

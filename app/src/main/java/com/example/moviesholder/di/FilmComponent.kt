@@ -2,7 +2,7 @@ package com.example.moviesholder.di
 
 import androidx.paging.ExperimentalPagingApi
 import com.example.moviesholder.domain.FilmApp
-import com.example.moviesholder.presentation.MainViewModel
+import com.example.moviesholder.presentation.viewmodels.MainViewModel
 import dagger.Component
 
 

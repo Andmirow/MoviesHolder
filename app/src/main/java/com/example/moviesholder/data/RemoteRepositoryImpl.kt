@@ -19,6 +19,8 @@ class RemoteRepositoryImpl @Inject constructor(
     private val getFilmsPagingSource : GetFilmsPagingSource
     ) : FilmRepository {
 
+
+
     var pagingConfig : PagingConfig
 
     init {
@@ -31,11 +33,16 @@ class RemoteRepositoryImpl @Inject constructor(
     }
 
     override fun getFilms(): Flow<PagingData<FilmsDb.FilmDbModel>> {
+
+
+
         return Pager(
             config = pagingConfig,
             remoteMediator = remoteMediator,
             pagingSourceFactory = {database.filmListDao().selectAll() }
         ).flow
+
+
     }
 
 
@@ -44,6 +51,7 @@ class RemoteRepositoryImpl @Inject constructor(
             config = pagingConfig,
             pagingSourceFactory = { getFilmsPagingSource }
         ).flow
+
     }
 
 
