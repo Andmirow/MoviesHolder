@@ -87,10 +87,6 @@ class MainViewModel (application : Application) : AndroidViewModel(application){
     }
 
 
-    fun refresh(){
-        Toast.makeText(appl, "пока не реализовал", Toast.LENGTH_LONG).show()
-        //repository.refresh()
-    }
 
 }
 

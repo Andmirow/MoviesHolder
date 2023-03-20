@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.moviesholder.databinding.FragmentFilterBinding
-import com.example.moviesholder.domain.FilmApp
 import com.example.moviesholder.domain.MovieFilter
 
 

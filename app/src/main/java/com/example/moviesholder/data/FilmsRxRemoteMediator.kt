@@ -7,11 +7,8 @@ import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.example.moviesholder.data.retrofit.FilmApi
 import com.example.moviesholder.data.room.database.AppDatabase
-import com.example.moviesholder.data.room.database.FilmRemoteKeys
 import com.example.moviesholder.data.room.database.FilmsDb
 import com.example.moviesholder.domain.MovieFilter
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException

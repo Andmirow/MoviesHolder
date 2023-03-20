@@ -12,7 +12,6 @@ interface FilmComponent {
 
     fun inject(activity: FilmApp)
 
-    //fun inject(itemRepositoryImpl: ItemRepositoryImpl)
 
     fun inject(viewModel: MainViewModel)
 

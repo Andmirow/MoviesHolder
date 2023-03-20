@@ -1,13 +1,11 @@
 package com.example.moviesholder.data
 
-import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.example.moviesholder.data.room.database.AppDatabase
 import com.example.moviesholder.data.room.database.FilmsDb
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import java.io.InvalidObjectException
 import javax.inject.Inject
 
 
@@ -33,7 +31,7 @@ class GetFilmsPagingSource @Inject constructor(
         return LoadResult.Page(
             data = data,
             prevKey = if (position == 1) null else position - 1,
-            nextKey = if (position == data.size) null else position + 1
+            nextKey = null// if (position == data.size) null else position + 1
         )
     }
 

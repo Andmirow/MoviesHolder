@@ -1,6 +1,5 @@
 package com.example.moviesholder.presentation
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -8,12 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -22,8 +17,6 @@ import com.example.moviesholder.data.MapperFilm
 import com.example.moviesholder.databinding.FragmentListFilmBinding
 import com.example.moviesholder.domain.Film
 import com.example.moviesholder.domain.FilmApp
-import com.example.moviesholder.domain.MovieFilter
-import com.example.moviesholder.presentation.recycler_view_tools.FilmAdapter
 import com.example.moviesholder.presentation.recycler_view_tools.FilmPagingDataAdapter
 import com.example.moviesholder.presentation.recycler_view_tools.LoadingGridStateAdapter
 import io.reactivex.disposables.CompositeDisposable
@@ -32,7 +25,6 @@ import io.reactivex.disposables.CompositeDisposable
 class ListFilmFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
-    //private lateinit var RxViewModel :MainViewModel
     private lateinit var binding : FragmentListFilmBinding
     private lateinit var fragmentControl : FragmentControl
     private lateinit var mAdapter: FilmPagingDataAdapter
@@ -52,13 +44,8 @@ class ListFilmFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListFilmBinding.inflate(inflater,container,false)
         mAdapter = FilmPagingDataAdapter(this::openFilmCard,this::deleteFilm)
-
         val view = binding.root
-
         Log.i("MyResult","onCreateView")
-        setRecyclerView(view)
-
-
 
 
         return view
@@ -75,7 +62,7 @@ class ListFilmFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //setRecyclerView()
+        setRecyclerView(view)
         setListener()
     }
 
@@ -86,8 +73,6 @@ class ListFilmFragment : Fragment() {
         }
         binding.switchSave.setOnCheckedChangeListener{ _, isChecked ->
             viewModel.isPreserved = isChecked
-
-            //mAdapter.retry()
             mDisposable.add(viewModel.getFilms((activity?.application as FilmApp).filmApi).subscribe {
                 Log.i("MyResult", "getMovies$it")
                 mAdapter.submitData(lifecycle, it.map { it -> MapperFilm.mapFilmDbModelToFilm(it) })
@@ -149,7 +134,6 @@ class ListFilmFragment : Fragment() {
 
     private fun deleteFilm(film : Film){
         viewModel.deleteFilm(film,(activity?.application as FilmApp).filmApi)
-        //mAdapter.retry()
     }
 
 
